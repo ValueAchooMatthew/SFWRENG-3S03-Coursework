@@ -1,0 +1,546 @@
+\documentclass[10pt]{article}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{braket}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{soul}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xltabular}
+\usepackage{listings, xcolor}
+\usepackage{courier}
+\usepackage{color}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+\title{SFWRENG 3S03 - Assignment 1}
+\author{Matthew Farah, \href{mailto:farahm11@mcmaster.ca}{$\langle$farahm11@mcmaster.ca$\rangle$}, 400468251}
+\date{\today}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\lstset{
+	tabsize = 4,
+	showstringspaces = false,
+	numbers = left,
+	commentstyle = \color{teal},
+	keywordstyle = \color{blue},
+	stringstyle = \color{red},
+	rulecolor = \color{black},
+	basicstyle = \ttfamily,
+	breaklines = true,
+	numberstyle = \small,
+}
+
+\fancyhead{}
+\fancyhead[L]{Matthew Farah, \href{mailto:farahm11@mcmaster.ca}{$\langle$farahm11@mcmaster.ca$\rangle$}, 400468251}
+\fancyhead[R]{SFWRENG 3S03 - Assignment 1}
+
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\setlength{\parindent}{0cm}
+
+\setcounter{tocdepth}{3}
+\hypersetup{bookmarksopen=true, bookmarksopenlevel=2, bookmarksdepth=3}
+
+\newcounter{chapter}
+\renewcommand{\thechapter}{\Roman{chapter}}
+
+\newcounter{question}
+\renewcommand{\thequestion}{\arabic{question}}
+
+\newenvironment{question}[2]{
+	\refstepcounter{question}
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{section}{\protect{\large{Question \thequestion \, - #1}}}
+	\vspace{1em}
+	\par
+	\large{[#2 marks]}\par
+	\large\textbf{Question \thequestion}
+	\vspace{.2cm}
+	\par
+	\setcounter{subquestion}{0}
+	\setcounter{step}{0}
+}{\vspace{.5em}}
+
+\newenvironment{solution}{
+	\vspace{1em}\par\large\textbf{{Solution:}}\par\vspace{1em}
+}{
+	\vspace{1em}
+}
+
+\newcounter{subquestion}
+\renewcommand{\thesubquestion}{\alph{subquestion}}
+
+\newenvironment{subquestion}[1]{
+	\refstepcounter{subquestion}
+	\phantomsection
+	\vspace{1em}
+	\large{[#1 marks]}\par
+	\vspace{.25em}\par\large\textbf{(\thesubquestion)}\hspace{-1em}
+	\setcounter{step}{0}
+	\addcontentsline{toc}{subsection}{\protect{\large{Part \thequestion.\thesubquestion}}}
+}{
+	\par
+	\vspace{1em}
+}
+
+\makeatother
+
+\makeatletter
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1.5em}\par\noindent\large\textbf{(\thestep)}
+}{
+	\par
+	\vspace{1.5em}
+}
+
+\makeatother
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\renewcommand{\arraystretch}{1.8}
+
+\fontsize{10pt}{14pt}\selectfont
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\begin{question}{Testing with generative AI}{10}
+	Suppose you are developing a game. This action-adventure game involves
+	exploration in a post-apocalyptic version of McMaster University, where up to eight
+	players may be accosted by zombies, mutated professors, angry Deans, killer
+	squirrels, and more. Gameplay can be both competitive and cooperative. The game
+	is to be released on the PS5, Xbox Series X, Nintendo Switch and, for some reason
+	known only to your designers, the Sega Genesis, which is 16-bit only and hasn’t been
+	manufactured since 1997.
+\end{question}
+
+\begin{subquestion}{3}
+	Ask your favourite generative AI technology (e.g., ChatGPT, Bard) to
+	specify three types of tests for such a game. Clearly state both the prompt(s)
+	you used, and the response the generative AI provided
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2}
+	State two things that you think are poor, incorrect, or unclear about
+	the answers given by the generative AI technology in (a). For each, state why
+	you think it’s unhelpful.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2}
+	State two things that you think are good, valid, or helpful about the
+	answers given by the generative AI technology in (a). For each, state why you
+	think it’s helpful.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{3}
+	Based on what you have learned from this, without using generative
+	AI, state three tests for the game briefly outlined above. In at most two
+	sentences, explain why you prefer these tests to the ones presented in (a).
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{question}{Testing with Junit}{32}
+	Below you’ll find four programs, each containing fault (or defects). Each also includes
+	test inputs that will result in a failure.
+
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 1:}]
+/**
+* Find last index of element
+*
+* @param x array to search
+* @param y value to look for
+* @return last index of y in x; -1 if absent
+* @throws NullPointerException if x is null
+*/
+public static int findLast (int[] x, int y)
+	{
+		for (int i=x.length-1; i > 0; i--)
+		{
+			if (x[i] == y)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+// test: x=[2, 3, 5]; y=2; Expected = 0
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 2:}]
+/**
+* Finds last index of zero
+*
+* @param x array to search
+*
+* @return last index of 0 in x; -1 if there is no zero
+* @throws NullPointerException if x is null
+*/
+public static int lastZero (int[] x)
+{
+	for (int i = 0; i < x.length; i++)
+	{
+		if (x[i] == 0)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+// test: x=[0,1,0]; Expected = 2
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 3:}]
+/**
+* Counts positive elements in array
+*
+* @param x array to search
+* @return number of positive elements in x
+* @throws NullPointerException if x is null
+*/
+public static int countPositive (int[] x)
+{
+	int count = 0;
+	for (int i=0; i < x.length; i++)
+	{
+		if (x[i] >= 0)
+		{
+			count++;
+		}
+	}
+	return count;
+}
+// test: x=[-4, 2, 0, 2]
+// Expected = 2
+	\end{lstlisting}
+	
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 4:}]
+/**
+* Count odd or positive elements in an array
+*
+* @param x array to search
+* @return count of odd or positive elements in x
+* @throws NullPointerException if x is null
+*/
+public static int oddOrPos (int[] x)
+{
+	// Effects: if x is null throw NullPointerException
+	// else return the number of elements in x that
+	// are either odd or positive (or both)
+	int count = 0;
+	for (int i = 0; i < x.length; i++)
+		{
+		if (x[i]%2 == 1 || x[i] > 0)
+		{
+			count++;
+		}
+	}
+	return count;
+}
+// test: x=[-3, -2, 0, 1, 4]
+// Expected = 3
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	Answer the following questions about each program. (The mark allocation below is
+	specified per program; that is, your answers are worth 8 marks per program for a total
+	of 32 marks for this question. Be sure to remember the definitions of failure, fault and
+	error given in lecture.)
+\end{question}
+
+\begin{subquestion}{1}
+	Explain what is wrong with the given code. Describe the fault precisely by
+	proposing a modification to the code.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2}
+	If possible, give a test case that does not execute the fault. If this is not
+	possible, briefly explain why.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2}
+	If possible, give a test case that executes the fault but does not result in
+	an error state. If this is not possible, briefly explain why.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2}
+	If possible, give a test case that results in an error state, but not a failure.
+	If this is not possible, briefly explain why. (Hint: don’t forget about the program
+	counter.)
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{1}
+	For the test case given with the program, describe the first error state that’s
+	reached.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{question}{Testing parts of large systems}{10}
+	Suppose you are developing an online version of Settlers of \href{https://en.wikipedia.org/wiki/Catan}{Catan}. \\
+
+	It is common practice in game design to approximate the level of difficulty by simply
+	rigging the game. For example, when trailing the human player, the game may
+	generate not-so-random rolls of dice that benefit the agent. To avoid flipping tables,
+	it is better to build some kind of a learning mechanism into the agent, e.g.,
+	reinforcement learning. However, this added functionality complicates testing. \\
+
+	At each turn every player can: roll the dice; collect resources accordingly; offer a trade
+	of resource cards to other players which they can accept, refuse, or counter with an
+	alternative offer; and build developments. \\
+
+	Suppose you are developing the core module of the game with the basic game
+	dynamics and rules. You only want to make sure agents can execute these actions
+	but for now, you are not really concerned whether those actions are actually useful
+	actions.
+\end{question}
+
+\begin{subquestion}{1.5}
+	Given the following interface, how would you decouple the agents'
+	behaviour from your current focus, i.e., core game dynamics? Explain the idea and
+	justify it.
+
+	\vspace{.5cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Interface:}]
+public interface CatanAgent {
+	void init(int playerId);
+	Move chooseInitialSettlement(GameState state);
+	Move chooseInitialRoad(GameState state);
+	Move chooseMove(GameState state);
+	Map<ResourceType, Integer> chooseDiscard(GameState state,int discardCount);
+	ResourceType chooseResource(GameState state);
+	int chooseRobberTarget(GameState state, List<Integer> possibleTargets);
+	DevelopmentCard chooseDevelopmentCard(GameState state);
+}
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	Hint: the core game functionality will invoke each agent (typically four of them in a
+	game) to act when it’s their turn, but you do not want to start the development with
+	the functionality that’s behind this interface.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{3}
+	Implement the idea in Java.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{3}
+	What other solutions can you envision here? Name a solution you would
+	anticipate from a software developer who is not familiar with the techniques you
+	used. List 3-4 convincing points against their solution and in favor of yours.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2.5}
+	What would you do if you realized no one in your company/unit/team
+	knows about the techniques you used in this exercise? To whom, how, and what would
+	you communicate to improve the software engineering process? What would be your
+	expectations? How does this question relate to your engineering practice, e.g., as
+	outlined by CEAB?
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{question}{Test-driven development (TDD)}{18}
+	You are developing a simple calculator software, following test-driven principles. The
+	next functionality you need to add is the \texttt{divide()} method with the usual semantics.
+	Execute the main steps of TDD, in at least two iterations.
+\end{question}
+
+\begin{subquestion}{2}
+	Develop a reasonable test suite to start the development of the
+	functionality. Define at least two unit tests.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2}
+	Develop the functionality until it passes the tests.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{4}
+	Is the functionality complete? Do you notice anything missing? Hint:
+	compare the functionality to the code you would have written in a non-TDD way.
+	Elaborate on this in detail.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{4}
+	Improve the test suite based on your previous answer.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{2}
+	Improve the functionality.
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{4}
+	Would you use TDD? If yes: in what context? If no: why? What is the
+	element you liked in TDD and what is the element you find the hardest to manage?
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{question}{Test coverage and AI}{30}
+	In this task, use the e-commerce order processing system \href{https://github.com/ssm-lab/3S03/tree/main/assignment1}{source code} of the
+	assignment.
+\end{question}
+
+\begin{subquestion}{6}
+	Generate a reasonable amount of JUnit tests via Gen AI. Touch them up
+	manually if there are compilation errors. Measure the coverage. (Choose a
+	reasonably complex coverage metric; not the most simplistic one!)
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{16}
+	Work with Gen AI until you reach 90\% coverage. You can use Gen AI, your
+	own engineering skills, or a mix of the two to reach the desired coverage. \\
+
+	Hint: Be creative and think about what Gen AI is good for and what your engineering
+	skills are good for. \\
+
+	\begin{itemize}
+		\item If you reached 90\% coverage, how much time it has taken?
+		\item What strategy did you use? (For example, did you switch
+			between AI and human once, multiple times, regularly?
+			Was there a role the AI played and role the human
+			played?
+	\end{itemize}
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{4}
+	What are your key takeaways from this exercise? What is gen AI useful
+	for and what is human cognition useful for in this particular setting (testing and
+	reaching test coverage)?
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{subquestion}{4}
+	Based on your takeaways, envision the next generation of AI-enabled,
+	human-in-the-loop testing tools, e.g., ones that you would like to work with. If you had
+	to invest \$1M into developing such tools, what would be the top features of that tool?
+	What would be the biggest challenges of widespread adoption?
+\end{subquestion}
+
+\begin{solution}
+
+\end{solution}
+
+
+
+
+
+\end{document}
