@@ -1,0 +1,92 @@
+\ifdefined\iscombined
+	\lecturetitle{Faults}
+\else
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 2} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Faults}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 2 - Faults}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Testing is defined as the process of evaluating software to estimate how well it meets some set of criteria.
+	\begin{itemize}
+		\item One of the primary goals of testing is to identify `faults' in a program.
+	\end{itemize}
+	\item Faults in programs are defined as anything which may cause the program to behave in an unintended way during execution.
+	\begin{itemize}
+		\item Synonymous with `bug' or `defect'.
+	\end{itemize}
+	\item `Errors' and `failures' are defined as specific kinds of faults.
+	\begin{itemize}
+		\item A program is said to error if it enters a bad state during its execution.
+		\item A failure is an observed instance of the program deviating from expected behaviour during execution.
+	\end{itemize}
+	\item Tests can only be used to prove or disprove the existence of faults in code.
+	\item A test case is a specific choice of inputs with a given set of initial conditions designed to verify if the program works as intended.
+	\begin{itemize}
+		\item Test cases use `test oracles' to determine this.
+		\begin{itemize}
+			\item Test oracles compare the actual and expected result of the program in a test case.
+		\end{itemize}
+	\end{itemize}
+	\item Edge case inputs are synonymous with boundary values.
+	\item Tests should be designed systematically, using domain knowledge about the program's inputs.
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi
