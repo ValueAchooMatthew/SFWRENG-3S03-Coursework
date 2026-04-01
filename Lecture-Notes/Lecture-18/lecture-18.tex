@@ -1,0 +1,209 @@
+\ifdefined\iscombined
+	\lecturetitle{Formal Reasoning}
+\else
+\documentclass{article}
+\usepackage{changepage}
+\usepackage{centernot}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{comment}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 18} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Formal Reasoning}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 18 - Formal Reasoning}
+
+\setlength{\parindent}{0cm}
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	frame=single,
+	tabsize=4,
+	breaklines=true,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=8pt,
+	xleftmargin=1.5em,
+	framexleftmargin=1.5em
+}
+
+\newcounter{example}
+\renewcommand{\theexample}{\arabic{example}}
+
+\newenvironment{example}[1][]{
+	\refstepcounter{example}
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{\ifx&#1&Example \theexample:\else Example \theexample \ (#1):\fi}
+	\ignorespaces
+}{
+	\vspace{.5em}
+	\end{adjustwidth}
+}
+
+\newcounter{subexample}
+\renewcommand{\thesubexample}{\alph{subexample}}
+
+\newenvironment{subexample}{
+	\setcounter{step}{0}
+	\refstepcounter{subexample}
+	\vspace{1em}\par\noindent
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{(\thesubexample)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newenvironment{solution}{
+	\vspace{.5em}
+	\par
+	\begin{adjustwidth}{1.5em}{}
+	\textbf{{Solution:}}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1em}\par\noindent
+	\ignorespaces\noindent\textbf{(\thestep)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Formal reasoning is a way by which we can analyze systems mathematically.
+	\begin{itemize}
+		\item Formal reasoning is necessary when approximating system behaviour is not sufficient.
+		\begin{itemize}
+			\item For example, in safety-critical systems.
+		\end{itemize}
+	\end{itemize}
+	\item Hoare logic is formal reasoning technique for programs.
+	\item Hoare logic consists of a  in a set of Hoare Triples.
+	\begin{itemize}
+		\item Hoare triples consist of:
+		\begin{enumerate}
+			\item A pre-condition ($\set{P}$).
+			\begin{itemize}
+				\item A pre-requisite condition of the system's variables for everything that follows.
+			\end{itemize}
+			\item A statement ($S$).
+			\begin{itemize}
+				\item The code being tested.
+			\end{itemize}
+			\item A post-condition ($R$).
+			\begin{itemize}
+				\item A state the program must be in after the statement has been executed, if the pre-condition was satisfied.
+			\end{itemize}
+		\end{enumerate}
+	\end{itemize}
+	\item The pre- and post-conditions are both expressed using predicate logic.
+	\begin{itemize}
+		\item The pre- and post-conditions can \underline{only} be expressed in terms of the program's inputs.
+	\end{itemize}
+	\item Hoare triples are written as:
+	\begin{itemize}
+		\item $\set{P}S\set{Q}$.
+		\begin{itemize}
+			\item Can be read as ``if $\set{P}$ holds and $S$ happens, then $\set{Q}$ must be true.''
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\begin{example}
+	Find the post conditions for the following set of Hoare Triples.
+\end{example}
+
+\begin{solution}
+
+\end{solution}
+
+\begin{itemize}
+	\item Hoare logic is often used to reason about small parts of a code base.
+	\begin{itemize}
+		\item For example, methods of a system as opposed to the system itself.
+	\end{itemize}
+	\item The strongest post-condition $Q'$ is a post-condition that implies all other post-conditions.
+	\begin{itemize}
+		\item If $\set{P}S\set{Q'}$ holds, then for any post-condition $Q$, $\set{P}S\set{Q}$ also holds.
+	\end{itemize}
+	\item The weakest pre-condition $P'$ is a pre-condition implied by all other pre-conditions.
+	\begin{itemize}
+		\item If for all pre-conditions $P$, $\set{P}S\set{Q}$ holds, then $\set{P'}S\set{Q}$ also holds.
+	\end{itemize}
+	\item Can be thought of as:
+	\begin{itemize}
+		\item $Q'$ has the strictest requirements on the program's variables after execution, so if $\set{P}S\set{Q'}$ holds, $\set{P}S\set{Q}$ must also hold since $Q$ has less strict requirements.
+		\item $P'$ makes the weakest assumptions about the program's variales, so if $\set{P'}S\set{Q}$ holds, $\set{P}S\set{Q}$ must also hold since $P$ has stricter requirements.
+	\end{itemize}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi
