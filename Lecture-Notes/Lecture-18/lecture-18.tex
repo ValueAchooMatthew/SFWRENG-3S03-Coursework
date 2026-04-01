@@ -175,10 +175,76 @@
 \end{itemize}
 
 \begin{example}
-	Find the post conditions for the following set of Hoare Triples.
+	Find appropriate post conditions for the following set of Hoare Triples: \\
+
+	\begin{center}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			$\set{P}$ & $S$ & $\set{Q}$ \\[0.5em]
+			\hline
+			\makebox[0pt][r]{(a)\hspace{1.4em}}$\set{x = y}$ & $x := x + 3$ & ?? \\[0.5em]
+			\hline
+			\makebox[0pt][r]{(b)\hspace{1.05em}}$\set{x > -1}$ & $x := x * 2 + 3$ & ?? \\[0.5em]
+			\hline
+			\makebox[0pt][r]{(c)\hspace{1.75em}}$\set{true}$ & $x := 5$ & ?? \\[0.5em]
+			\hline
+		\end{tabular}
+	\end{center}
 \end{example}
 
 \begin{solution}
+
+	We can reason about what the post-condition for each Hoare triple should be as follows:
+
+	\begin{step}
+		Find the post-condition for (a).
+	\end{step}
+
+	The pre-condition asserts that prior to executing $S$, $x$ and $y$ are equal. $S$ just increments $x$ by $3$, and so after executing $S$, we can evidently see that $x = y + 3$. We can therefore make $Q = \set{x = y + 3}$ our post-condition.
+
+	Note here that for Hoare logic, we don't consider implementation details like integer overflow when determining our pre- and post-conditions. As well, there are multiple valid post-conditions we could have selected for this particular one. For example, $Q = \set{x > y}$ would also be a valid post-condition. I'll talk about this a bit later when discussing weakest and strongest pre- and post-conditions later.
+
+	\begin{step}
+		Find the post-condition for (b).
+	\end{step}
+
+	As before, we can see that prior to doing $S$, $x$ is strictly greater than $-1$. $S$ multiplies $x$ by two and adds 3 to it, and since:
+
+	\begin{gather*}
+		x > -1 \\[-4em]
+	\end{gather*}
+
+	\begin{align*}
+		&\implies 2x + 3 > 2\cdot(-1) + 3 \\
+		&\implies 2x + 3 > -2 + 3 \\
+		&\implies 2x + 3 > 1 \\
+	\end{align*}
+
+	And so, after assigning $x$ to be $2x + 3$, we always have that $x > 1$. So $Q = \set{x > 1}$ would be a valid post-condition.
+
+	\begin{step}
+		Find the post-condition for (c).
+	\end{step}
+
+	The pre-condition for (c) is simply true, so no assumptions about the input $x$ (or any other potential input variable(s) to $S$ for that matter) are being made. However, after executing $S$, we at least know that $x$ is assigned to be 5. Thus, $Q = \set{x = 5}$ would be a valid post-condition. \\
+
+	To summarize, we have that:
+
+	\begin{center}
+		\renewcommand{\arraystretch}{1.5}
+		\begin{tabular}{| c | c | c |}
+			\hline
+			$\set{P}$ & $S$ & $\set{Q}$ \\[0.5em]
+			\hline
+			\makebox[0pt][r]{(a)\hspace{1.4em}}$\set{x = y}$ & $x := x + 3$ & $\set{x = y + 3}$ \\[0.5em]
+			\hline
+			\makebox[0pt][r]{(b)\hspace{1.05em}}$\set{x > -1}$ & $x := x * 2 + 3$ & $\set{x > 1}$ \\[0.5em]
+			\hline
+			\makebox[0pt][r]{(c)\hspace{1.75em}}$\set{true}$ & $x := 5$ & $\set{x = 5}$ \\[0.5em]
+			\hline
+		\end{tabular}
+	\end{center}
 
 \end{solution}
 
