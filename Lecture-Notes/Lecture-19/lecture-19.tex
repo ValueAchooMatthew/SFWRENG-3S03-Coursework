@@ -136,7 +136,97 @@
 
 %TODO: Add examples, if I have time
 \begin{itemize}
-	\item It is o
+	\item Building models of system helps in the testing process.
+	\begin{itemize}
+		\item Helps abstract away details unnecessary to the testing process.
+		\item Allows for the system to be evaluated without an actual implementation.
+	\end{itemize}
+	\item Models can be:
+	\begin{enumerate}
+		\item Formal.
+		\begin{itemize}
+			\item Built around the system's formal requirements.
+		\end{itemize}
+		\item Informal.
+		\begin{itemize}
+			\item A rough draft of the system.
+		\end{itemize}
+	\end{enumerate}
+	\item There are many different ways to model the same system.
+	\begin{itemize}
+		\item Ex. Petri-nets, state-transition systems, etc.
+	\end{itemize}
+	\item There is no single `best' model for a system.
+	\begin{itemize}
+		\item The best model for a system is context-dependent.
+	\end{itemize}
+	\item Model checking a system follows a two-step process:
+	\begin{enumerate}
+		\item Building a formal model of the system.
+		\begin{itemize}
+			\item Using the system's formal requirements.
+		\end{itemize}
+		\item Evaluating the constructed model.
+	\end{enumerate}
+	\item Model checking is an undecidable problem.
+	\begin{itemize}
+		\item There doesn't exist an algorithm which can always determine whether a given model of a system always behaves correctly or not.
+	\end{itemize}
+	\item All languages are composed of at least two things:
+	\begin{enumerate}
+		\item A concrete syntax.
+		\begin{itemize}
+			\item The language's notation.
+		\end{itemize}
+		\item An abstract syntax.
+		\begin{itemize}
+			\item A set of rules governing how the language's notation can be structured.
+		\end{itemize}
+	\end{enumerate}
+	\item Formalisms are languages with semantics.
+	\begin{itemize}
+		\item Semantics assign meaning to notation.
+	\end{itemize}
+	\item Models are expressed using formalisms to prevent ambiguity.
+	\item Some notable formal models include:
+	\begin{itemize}
+		\item Kipke structures.
+		\begin{itemize}
+			\item TLDR; Basically just finite state machines.
+			\item Don't think we really need to know these.
+		\end{itemize}
+		\item Timed automata.
+		\begin{itemize}
+			\item TLDR; Kipke structures that additionally have:
+			\begin{itemize}
+				\item An infinite state-space.
+				\item Timed semantics (behaviour depends on transitions and the elapsed time).
+			\end{itemize}
+			\item Also don't think we really need to know these.
+		\end{itemize}
+		\item Petri-nets.
+		\begin{itemize}
+			\item TLDR; See SFWRENG-3BB4.
+			\item We do need to know these.
+		\end{itemize}
+	\end{itemize}
+	\item Petri-nets are used to model:
+	\begin{itemize}
+		\item Concurrency.
+		\item Causality.
+		\item Synchronization.
+		\item Resource constraints.
+	\end{itemize}
+	\item Petri-nets verify system properties such as:
+	\begin{itemize}
+		\item Reachability.
+		\item The existence of deadlocks.
+		\item Boundedness.
+		\item Liveliness
+		\begin{itemize}
+			\item \emph{Aside: The slides call it liveness but I'm using liveliness because liveness sounds so dumb to me.}
+		\end{itemize}
+	\end{itemize}
 \end{itemize}
 
 \ifdefined\iscombined
