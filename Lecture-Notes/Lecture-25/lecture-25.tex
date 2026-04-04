@@ -1,0 +1,208 @@
+\ifdefined\iscombined
+	\lecturetitle{Factors in Testing}
+\else
+\documentclass{article}
+\usepackage{changepage}
+\usepackage{centernot}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{comment}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{backgrounds, calc, positioning}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 25} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Factors in Testing}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 25 - Factors in Testing}
+
+\setlength{\parindent}{0cm}
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	frame=single,
+	tabsize=4,
+	breaklines=true,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=8pt,
+	xleftmargin=1.5em,
+	framexleftmargin=1.5em
+}
+
+\newcounter{example}
+\renewcommand{\theexample}{\arabic{example}}
+
+\newenvironment{example}[1][]{
+	\refstepcounter{example}
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{\ifx&#1&Example \theexample:\else Example \theexample \ (#1):\fi}
+	\ignorespaces
+}{
+	\vspace{.5em}
+	\end{adjustwidth}
+}
+
+\newcounter{subexample}
+\renewcommand{\thesubexample}{\alph{subexample}}
+
+\newenvironment{subexample}{
+	\setcounter{step}{0}
+	\refstepcounter{subexample}
+	\vspace{1em}\par\noindent
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{(\thesubexample)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newenvironment{solution}{
+	\vspace{.5em}
+	\par
+	\begin{adjustwidth}{1.5em}{}
+	\textbf{{Solution:}}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1em}\par\noindent
+	\ignorespaces\noindent\textbf{(\thestep)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Test factors describe the quality-related attributes of a system.
+	\begin{itemize}
+		\item For example:
+		\begin{itemize}
+			\item Correctness.
+			\item Data integrity.
+			\item Ease of use.
+			\begin{itemize}
+				\item How user-friendly the system is for the client/clients.
+			\end{itemize}
+			\item Ease of operation.
+			\begin{itemize}
+				\item How easy the system is to develop, operate, maintain.
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\item Test factors should:
+	\begin{itemize}
+		\item By decided by the client's/clients' requirements.
+		\item Should consider all potential risks to the system.
+	\end{itemize}
+	\item The testing strategy for a system should be chosen according to:
+	\begin{itemize}
+		\item The team's past project experience.
+		\item The team's size.
+		\item The team's structure.
+		\item The application domain of the system.
+	\end{itemize}
+	\item A system's risks belong to at least one of five categories.
+	\begin{enumerate}
+		\item Functional.
+		\begin{itemize}
+			\item Would affect the behaviour of one or more features.
+		\end{itemize}
+		\item Performance/scalability.
+		\begin{itemize}
+			\item Self-explanitory.
+		\end{itemize}
+		\item Security.
+		\begin{itemize}
+			\item Would make the system vulnerable to something.
+			\begin{itemize}
+				\item Important to note, applies to the security of the \underline{system}, not of users.
+			\end{itemize}
+			\item For example:
+			\begin{itemize}
+				\item Data breach risks.
+				\item Dependency risks.
+			\end{itemize}
+		\end{itemize}
+		\item Usability.
+		\begin{itemize}
+			\item Would affect the system's ease of use.
+		\end{itemize}
+		\item Maintainability.
+		\begin{itemize}
+			\item Would affect the system's ease of operation.
+		\end{itemize}
+	\end{enumerate}
+	%TODO: Elaborate and/or give examples.
+	\item The risks to a system can be described in matrix form.
+	\begin{itemize}
+		\item \emph{Aside: Will describe better and/or with examples if I have time.}
+	\end{itemize}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi
