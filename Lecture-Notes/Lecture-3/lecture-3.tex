@@ -1,0 +1,167 @@
+\ifdefined\iscombined
+	\lecturetitle{Types of Testing}
+\else
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 3} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Types of Testing}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 3 - Types of Testing}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item `Input cases' are groups of inputs to a program which cause it to behave similarly during execution.
+	\begin{itemize}
+		\item An `edge case' is an input belonging to either multiple input cases or none at all.
+		\begin{itemize}
+			\item Testing edge cases is key to ensuring programs behave as intended.
+		\end{itemize}
+		\item When input cases are well defined, a single representative test case from a group can be used to adequately verify that the program works as intended for all inputs in that test case's group.
+	\end{itemize}
+	\item Tests should ideally be written and execute as quickly as possible.
+	\begin{itemize}
+		\item However, testing may be constrained by its cost and the availability of code artifacts to test on.
+	\end{itemize}
+	\item The kinds of bugs being tested for dictate the kinds of tests to be used.
+	\item Code `linting' is the act of enforcing certain standards and code style throughout a codebase.
+	\item Certain kinds of tests require the program to be executed to work, while others do not.
+	\begin{itemize}
+		\item This splits tests into two distinct categories.
+	\end{itemize}
+	\item All tests are either:
+	\begin{enumerate}
+		\item Dynamic tests.
+		\begin{itemize}
+			\item Tests programs by executing them.
+			\item Used to find runtime or integration bugs.
+			\item Should be down throughout the Continuous Integration / Continuous Development (CI/CD) process.
+		\end{itemize}
+		\item Static tests.
+		\begin{itemize}
+			\item Tests programs \underline{without} executing them.
+			\item Used to catch bugs early and perform code linting.
+			\item Should be performed prior to any dynamic tests.
+		\end{itemize}
+	\end{enumerate}
+	\item As well, certain kinds of tests work using or not using available knowledge about the code or its structure.
+	\begin{itemize}
+		\item This splits tests into another three distinct (somewhat more ambiguous) categories.
+	\end{itemize}
+	\item All tests are either:
+	\begin{enumerate}
+		\item Black-box tests.
+		\begin{itemize}
+			\item Tests programs without using \underline{any} knowledge of the code or its structure.
+			\item Must be done as a dynamic test.
+			\item Performed when:
+			\begin{itemize}
+				\item No knowledge of the code or its structure is available.
+				\item The test is verifying that any changes made to the code or its stucture shouldn't affect its behaviour.
+			\end{itemize}
+		\end{itemize}
+		\item Grey-box tests.
+		\begin{itemize}
+			\item Tests programs by using \underline{some} knowledge of the code and/or its structure.
+			\item Typically done as a dynamic test.
+			\item Performed when:
+			%TODO: Add more
+			\begin{itemize}
+				\item The test is verifying that units are properly integrated.
+			\end{itemize}
+		\end{itemize}
+		\item White-box tests.
+		\begin{itemize}
+			\item Tests programs by using \underline{full} knowledge of the code and its structure.
+			\item Can be done as either a dynamic or static test.
+			\item Performed when:
+			%TODO: Add an example
+			\begin{itemize}
+				\item The test must do anything not possible by black-box or grey-box testing.
+			\end{itemize}
+		\end{itemize}
+	\end{enumerate}
+	\item Requirements define characteristics a given system must abide by.
+	\item Requirements are divided into two distinct categories:
+	\begin{enumerate}
+		\item Functional requirements.
+		\begin{itemize}
+			\item Describe what the system must do.
+			\begin{itemize}
+				\item For example, the features or behaviour it must have.
+			\end{itemize}
+		\end{itemize}
+		\item Non-functional requirements.
+		\begin{itemize}
+			\item A system's non-functional requirements describe the performance needs the system must satisfy.
+			\begin{itemize}
+				\item For example, the speed it must operate at.
+			\end{itemize}
+		\end{itemize}
+	\end{enumerate}
+	\item Tests can be written to verify that a system is compliant with its functional or non-functional requirements.
+	\begin{itemize}
+		\item This once again places tests into two distinct categories.
+	\end{itemize}
+	\item All tests are either:
+	%TODO: Maybe talk about each a little more.
+	\begin{enumerate}
+		\item Functional tests.
+		\item Non-functional tests.
+	\end{enumerate}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

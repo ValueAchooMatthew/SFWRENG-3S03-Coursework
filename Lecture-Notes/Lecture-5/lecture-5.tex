@@ -1,0 +1,113 @@
+\ifdefined\iscombined
+	\lecturetitle{Test Suites}
+\else
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 5} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Test Suites}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 5 - Test Suites}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item A test suite is a collection of tests for a program/system.
+	\begin{itemize}
+		\item `SUT' = `System Under Test'.
+	\end{itemize}
+	\item There exist two kinds of unit tests:
+	\begin{enumerate}
+		\item Solitary.
+		\begin{itemize}
+			\item Isolates unit tests by using `test doubles' to simulate its dependencies.
+		\end{itemize}
+		\item Social.
+		\begin{itemize}
+			\item Any unit test that isn't solitary.
+		\end{itemize}
+	\end{enumerate}
+	\item There are five important kinds of test doubles:
+	\begin{enumerate}
+		\item Dummies.
+		\begin{itemize}
+			\item Uses empty objects to simulate what dependencies return to the unit.
+		\end{itemize}
+		\item Fakes.
+		\begin{itemize}
+			\item Uses minimally functioning objects to simulate what dependencies return to the unit.
+		\end{itemize}
+		\item Stubs.
+		\begin{itemize}
+			\item Uses a static, pre-determined values to simulate what dependencies return to the unit.
+		\end{itemize}
+		\item Spies.
+		\begin{itemize}
+			\item Stubs that additionally record what the unit does with the value returned to it.
+		\end{itemize}
+		\item Mocks
+		\begin{itemize}
+			\item A minimal implementation of the dependency the unit relies on.
+		\end{itemize}
+	\end{enumerate}
+	\item The type of test double to be used depends on both the unit itself and the bugs being tested for.
+	\item Automated testing helps ensure system-breaking dependency changes are identified.
+	\item Testing should always be done as early and often as possible.
+	\begin{itemize}
+		\item This minimizes the cost and time required to identify and fix bugs.
+	\end{itemize}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

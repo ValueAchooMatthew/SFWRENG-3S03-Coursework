@@ -1,0 +1,116 @@
+\ifdefined\iscombined
+	\lecturetitle{Equivalence Classes}
+\else
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 9} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Equivalence Classes}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 9 - Equivalence Classes}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item A system's domain is the set of all its possible inputs.
+	\item An equivalence class is an equivalence relation for some subset of the program's domain ($E \subseteq D$).
+	\begin{itemize}
+		\item For $x \in D$, $E_x$ is an equivalence class for $x$ if $\forall y \in D; x \equiv y \implies y \in E_x$.
+	\end{itemize}
+	\item If two inputs belong to the same equivalence class, the program behaves the same for both inputs.
+	\begin{itemize}
+		\item Useful to reduce the number of tests needed.
+	\end{itemize}
+	\item A system's domain can be `partitioned' into multiple equivalence classes.
+	\item $P = \set{E_{x_{1}}, E_{x_{2}}, \ldots, E_{x_{n}}}$ is a partition of $D$ if its equivalence classes:
+	\begin{enumerate}
+		\item Are disjoint.
+		\begin{itemize}
+			\item $\forall i \neq j; E_{x_{i}} \cap E_{x_{j}} = \emptyset$.
+		\end{itemize}
+		\item Equal the domain.
+		\begin{itemize}
+			\item $\bigcup_{i = 1}^{n} E_{x_{i}} = D$.
+		\end{itemize}
+	\end{enumerate}
+	\item If the domain can be partitioned, only $n$-many tests (the number of equivalence classes) are needed to test the system.
+	\item In practice, very few program domains can be partitioned into meaningful equivalence classes.
+	\begin{itemize}
+		\item To partition most domains, an equivalence tolerance must be introduced.
+		\begin{itemize}
+			\item Ex. $x$ is equivalent to $y$ if $|x - y| \le 1$.
+			\begin{itemize}
+				\item Here, our tolerance is 1.
+				\item Tolerance is also called delta.
+			\end{itemize}
+		\end{itemize}
+	\end{itemize}
+	\item Partitions with tolerance no longer guarantee that two inputs in the same equivalence class make the system act the same on those inputs.
+	\begin{itemize}
+		\item Since non-trivial tolerances violate transitivity.
+		\item The smaller the tolerance, the less significant this becomes.
+	\end{itemize}
+	\item A partition $P_1$ finer than partition $P_2$ if $P_2 \subseteq P_1$
+	\begin{itemize}
+		\item Occurs when $P_1$ has a smaller tolerance than $P_2$.
+		\item $P_2$ would be called a courser partition.
+	\end{itemize}
+	\item A test suite for some partition is called adequate if every equivalence class has a test for it.
+	\begin{itemize}
+		\item If a test suit is adequate for a partition, it is adequate for courser partitions.
+	\end{itemize}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

@@ -1,0 +1,162 @@
+\ifdefined\iscombined
+	\lecturetitle{Code Coverage}
+\else
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 6} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Code Coverage}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 6 - Code Coverage}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Bugs tend to cluster together in systems.
+	\begin{itemize}
+		\item Generally, 20\% of code is responsible for 80\% of bugs.
+	\end{itemize}
+	\item Tests can be `formal' or `informal'.
+	\begin{itemize}
+		\item Formal tests are done in a specific way and check specific things.
+		\item Informal tests look at subjective things without a rigorous methodology.
+	\end{itemize}
+	\item Some examples of formal and informal tests are as follows:
+	\begin{itemize}
+		\item Exploratory testing.
+		\begin{itemize}
+			\item TLDR; Manually fucking around with the system and seeing what happens.
+			\item Informal.
+		\end{itemize}
+		\item Fuzz testing.
+		\begin{itemize}
+			\item TLDR; Automated exploratory testing.
+			\item Informal.
+		\end{itemize}
+		\item Model-based testing.
+		\begin{itemize}
+			\item TLDR; Creating formal models of the system to automatically generate tests.
+			\item Formal.
+		\end{itemize}
+		\item Specifications-based testing.
+		\begin{itemize}
+			\item TLDR; Using invariants and pre/post-conditions of the system to test its behaviour.
+			\item Formal.
+		\end{itemize}
+	\end{itemize}
+	\item All tests are either:
+	\begin{enumerate}
+		\item Robust.
+		\begin{itemize}
+			\item Checks \underline{both} valid and invalid inputs.
+		\end{itemize}
+		\item Normal.
+		\begin{itemize}
+			\item Checks \underline{only} valid inputs.
+		\end{itemize}
+	\end{enumerate}
+	\item As well, all tests are either:
+	\begin{itemize}
+		\item Strong.
+		\begin{itemize}
+			\item Makes no assumption about how many bugs the code can have.
+		\end{itemize}
+		\item Weak.
+		\begin{itemize}
+			\item Assumes the code being tested can only have one bug in it.
+		\end{itemize}
+	\end{itemize}
+	\item Every test can be described as some combination of Robust/Normal and Strong/Weak.
+	\item A program's Control Flow Graph (CFG) is a graph representing the sequence of instructions that can be executed by the program.
+	\item A path is a sequence of valid execution steps in a CFG.
+	\begin{itemize}
+		\item Paths must start at a valid entry point of the program and end at some exit point.
+	\end{itemize}
+	\item A set of paths are said to be linearly independent if none of them can be expressed as some combination of the other paths in the set.
+	\item A test suite's coverage is a measurement (metric) describing how much of the code is being tested.
+	\begin{itemize}
+		\item Coverage can be defined in multiple ways.
+	\end{itemize}
+	\item The five main definitions of test coverage are:
+	\begin{enumerate}
+		\item Statement/line coverage.
+		\begin{itemize}
+			\item Achieved when every line of code is tested.
+		\end{itemize}
+		\item Condition coverage.
+		\begin{itemize}
+			\item Achieved when every boolean of the code has been tested as true and false.
+		\end{itemize}
+		\item Branch/Decision coverage.
+		\begin{itemize}
+			\item Achieved when every possible branch in the code has been tested.
+		\end{itemize}
+		\item Modified Condition/Decision Coverage (MC/DC).
+		\begin{itemize}
+			\item Achieved when:
+			\begin{enumerate}
+				\item Every entry and exit point has been invoked.
+				\item Every decision outcome has been tested.
+				\item Each condition in a decision that can independently change the outcome of the decision has been tested.
+			\end{enumerate}
+		\end{itemize}
+		\item Path coverage.
+		\begin{itemize}
+			\item Achieved when all possible linearly independent paths through the CFG have been tested.
+		\end{itemize}
+	\end{enumerate}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

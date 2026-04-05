@@ -1,0 +1,417 @@
+\ifdefined\iscombined
+	\lecturetitle{Petri-nets and CTL}
+\else
+\documentclass{article}
+\usepackage{changepage}
+\usepackage{centernot}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{comment}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{backgrounds, calc, positioning}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 20} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Petri-nets and CTL}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 20 - Petri-nets and CTL}
+
+\setlength{\parindent}{0cm}
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	frame=single,
+	tabsize=4,
+	breaklines=true,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=8pt,
+	xleftmargin=1.5em,
+	framexleftmargin=1.5em
+}
+
+\newcounter{example}
+\renewcommand{\theexample}{\arabic{example}}
+
+\newenvironment{example}[1][]{
+	\refstepcounter{example}
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{\ifx&#1&Example \theexample:\else Example \theexample \ (#1):\fi}
+	\ignorespaces
+}{
+	\vspace{.5em}
+	\end{adjustwidth}
+}
+
+\newcounter{subexample}
+\renewcommand{\thesubexample}{\alph{subexample}}
+
+\newenvironment{subexample}{
+	\setcounter{step}{0}
+	\refstepcounter{subexample}
+	\vspace{1em}\par\noindent
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{(\thesubexample)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newenvironment{solution}{
+	\vspace{.5em}
+	\par
+	\begin{adjustwidth}{1.5em}{}
+	\textbf{{Solution:}}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1em}\par\noindent
+	\ignorespaces\noindent\textbf{(\thestep)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Petri-nets are used to model non-determinism in software.
+	\item The critical section of a program refers to where shared resources are stored.
+	\begin{itemize}
+		\item Semaphores are used to control processes' access to the critical section.
+	\end{itemize}
+	\item Inhibator arcs are arcs (arrows) that can only be taken if its input place is empty.
+	\item Transitions may have different priorities.
+	\begin{itemize}
+		\item Helps to solve conflicts and prevent deadlocks.
+	\end{itemize}
+	\item The start state of a Petri-net describes its initial arrangement of tokens before any transitions are taken.
+	\item The state of a Petri-net describes an valid arrangement of its tokens reachable from the start-state
+	\item A path through a Petri-net is a valid sequence of its states.
+	\item Computational Tree Language (CTL) is a query language.
+	\begin{itemize}
+		\item Frequently used for evaluating properties of Petri-nets.
+		\item Evaluate to true or false.
+	\end{itemize}
+	\item CTL statements are use two types of quantifiers:
+	\begin{enumerate}
+		\item General quantifiers.
+		\begin{itemize}
+			\item Quantifies over all paths from the current state.
+		\end{itemize}
+		\item Path-specific quantifiers.
+		\begin{itemize}
+			\item Quantifies along a given path from the current state.
+		\end{itemize}
+	\end{enumerate}
+	\item There are two general quantifiers in CTL:
+	\begin{enumerate}
+		\item $A$.
+		\begin{itemize}
+			\item Means ``for all paths in the model''.
+			\item \emph{Aside: Think of it like $\forall$}.
+		\end{itemize}
+		\item $E$.
+		\begin{itemize}
+			\item Means ``there exists a path in the mode''.
+			\item \emph{Aside: Think of it like $\exists$}.
+		\end{itemize}
+	\end{enumerate}
+	\item There are four path-specific quantifiers in CTL:
+	\begin{enumerate}
+		\item $F$.
+		\begin{itemize}
+			\item Means ``finally''.
+			\item \emph{Aside: Think of it like the property should eventually hold}.
+		\end{itemize}
+		\item $G$.
+		\begin{itemize}
+			\item Means ``globally''.
+			\item \emph{Aside: Think of it as meaning the property should hold for all valid states}.
+		\end{itemize}
+		\item $X$.
+		\begin{itemize}
+			\item Means ``next''.
+		\end{itemize}
+		\item $U$.
+		\begin{itemize}
+			\item Means ``until''.
+			\item \emph{Aside: Think of it as meaning the property should hold \underline{at least} until some other property is true (the property can still hold after the other becomes true)}.
+		\end{itemize}
+	\end{enumerate}
+	\item The criteria for these quantifiers to be satisfied looks like the following when graphed, where:
+	\begin{itemize}
+		\item $p$ and $q$ are properties of the system being queries for.
+		\item Blue vertices correspond to states where the query for $p$ is true.
+		\item Red vertices correspond to states where the query for $q$ is true.
+		\item Black vertices correspond to states where the query may or not be true (doesn't matter which).
+	\end{itemize}
+\end{itemize}
+
+\vspace{1em}
+
+\definecolor{bp}{RGB}{50,50,220}      % Blue
+\definecolor{rp}{RGB}{220,50,70}      % Red
+
+\tikzset{
+	nd/.style  = {circle, fill=black, inner sep=0pt, minimum size=4.5pt},
+	bn/.style  = {circle, fill=bp,    inner sep=0pt, minimum size=5.5pt},
+	rn/.style  = {circle, fill=rp,    inner sep=0pt, minimum size=5.5pt},
+	eg/.style  = {thick, black!55},
+	be/.style  = {very thick, bp},
+	re/.style  = {very thick, rp},
+}
+
+\newcommand{\treecoords}{
+	\coordinate (N0)  at ( 0.0,  0.0);
+	\coordinate (N1)  at (-1.2, -1.0);
+	\coordinate (N2)  at ( 1.2, -1.0);
+	\coordinate (N3)  at (-1.8, -2.0);
+	\coordinate (N4)  at (-0.6, -2.0);
+	\coordinate (N5)  at ( 0.6, -2.0);
+	\coordinate (N6)  at ( 1.8, -2.0);
+	\coordinate (N7)  at (-2.1, -3.0);
+	\coordinate (N8)  at (-1.5, -3.0);
+	\coordinate (N9)  at (-0.9, -3.0);
+	\coordinate (N10) at (-0.3, -3.0);
+	\coordinate (N11) at ( 0.3, -3.0);
+	\coordinate (N12) at ( 0.9, -3.0);
+	\coordinate (N13) at ( 1.5, -3.0);
+	\coordinate (N14) at ( 2.1, -3.0);
+}
+
+\newcommand{\treebg}{
+	(0, 0.30) -- (-2.45, -3.25) -- (2.45, -3.25) -- cycle;
+}
+
+\newcommand{\treeedges}{
+	\foreach \p/\c in
+		{0/1,0/2,1/3,1/4,2/5,2/6,3/7,3/8,4/9,4/10,5/11,5/12,6/13,6/14}{
+		\draw[eg] (N\p) -- (N\c);
+	}
+}
+
+\newcommand{\allblack}{
+	\foreach \i in {0,...,14}{ \node[nd] at (N\i) {}; }
+}
+
+%NOTE: Most of this was generated by Claude.
+% I can confirm it is correct however.
+% It's based on graphic given in lecture slides and I edited the .tikz substantially it to fix all the mistakes it made.
+% AGI my ass.
+
+\begin{center}
+	\scalebox{.65}{
+		\begin{tikzpicture}
+
+		% =========== grid constants ===========
+		\pgfmathsetmacro{\ColSep}{5.8}
+		\pgfmathsetmacro{\RowSep}{5.6}
+
+		% =========== column headers ===========
+		\node[font=\large\sffamily\bfseries, anchor=south] at (0,1.0)
+			{F\,\textcolor{bp}{p}};
+		\node[font=\small\sffamily, anchor=south] at (0,0.5)
+			{finally \textcolor{bp}{p}};
+
+		\node[font=\large\sffamily\bfseries, anchor=south] at (\ColSep,1.0)
+			{G\,\textcolor{bp}{p}};
+		\node[font=\small\sffamily, anchor=south] at (\ColSep,0.5)
+			{globally \textcolor{bp}{p}};
+
+		\node[font=\large\sffamily\bfseries, anchor=south] at (2*\ColSep,1.0)
+			{X\,\textcolor{bp}{p}};
+		\node[font=\small\sffamily, anchor=south] at (2*\ColSep,0.5)
+			{next \textcolor{bp}{p}};
+
+		\node[font=\large\sffamily\bfseries, anchor=south] at (3*\ColSep,1.0)
+			{\textcolor{bp}{p}\;U\;\textcolor{rp}{q}};
+
+		\node[font=\small\sffamily, anchor=south] at (3*\ColSep,0.5)
+			{\textcolor{bp}{p} until \textcolor{rp}{q}};
+
+		% =========== row headers ===========
+		\node[font=\LARGE\sffamily\bfseries, anchor=east] at (-2.9, -1.5) {A};
+		\node[font=\LARGE\sffamily\bfseries, anchor=east] at (-2.9, {-1.5-\RowSep}) {E};
+
+		% ================================================================
+		%  ROW 1 — A  (for All paths)
+		% ================================================================
+
+		% ---- AF p ----
+		%  All paths eventually reach p.
+		%  p (blue) holds at levels 2-3; every path passes through level 2.
+		\begin{scope}[shift={(0,0)}]
+			\treecoords \treebg \treeedges
+
+			\foreach \i in {0,1,2}{ \node[nd] at (N\i) {}; }
+			\foreach \i in {3,...,6}{ \node[bn] at (N\i) {}; }
+			\foreach \i in {7,...,14}{ \node[nd] at (N\i) {}; }
+		\end{scope}
+
+		% ---- AG p ----
+		%  All paths, p holds globally (everywhere).
+		\begin{scope}[shift={(\ColSep,0)}]
+			\treecoords \treebg \treeedges
+			\foreach \i in {0,...,14}{ \node[bn] at (N\i) {}; }
+		\end{scope}
+
+		% ---- AX p ----
+		%  All paths, p holds at the next state.
+		%  Only the two level-1 children are blue.
+		\begin{scope}[shift={(2*\ColSep,0)}]
+			\treecoords \treebg \treeedges
+			\allblack
+			\foreach \i in {1,2}{ \node[bn] at (N\i) {}; }
+		\end{scope}
+
+		% ---- A[p U q] ----
+		%  All paths: p (blue) holds until q (red) becomes true.
+		%  p at root + level 1; q at levels 2-3.
+		\begin{scope}[shift={(3*\ColSep,0)}]
+			\treecoords \treebg \treeedges
+			% blue (p): root, level 1
+			\foreach \i in {0,1,2}{ \node[bn] at (N\i) {}; }
+			% red (q): levels 2-3
+			\foreach \i in {3,...,6}{ \node[rn] at (N\i) {}; }
+			\foreach \i in {7,...,14}{ \node[nd] at (N\i) {}; }
+		\end{scope}
+
+		% ================================================================
+		%  ROW 2 — E  (there Exists a path)
+		% ================================================================
+
+		% ---- EF p ----
+		%  There exists a path on which p eventually holds.
+		%  One node is blue; path root -> T1 -> T4 reaches it.
+		\begin{scope}[shift={(0,-\RowSep)}]
+			\treecoords \treebg \treeedges
+			\allblack
+			% highlighted path
+			\draw[be] (N0) -- (N1);
+			\draw[be] (N1) -- (N4);
+			% single blue node at the end
+			\node[bn] at (N4) {};
+		\end{scope}
+
+		% ---- EG p ----
+		%  There exists a path on which p holds globally.
+		%  Path root -> T2 -> T5 -> T12, all nodes blue.
+		\begin{scope}[shift={(\ColSep,-\RowSep)}]
+			\treecoords \treebg \treeedges
+			\allblack
+			% highlighted edges
+			\draw[be] (N0) -- (N2);
+			\draw[be] (N2) -- (N5);
+			\draw[be] (N5) -- (N12);
+			% blue nodes along the path
+			\foreach \i in {0,2,5,12}{ \node[bn] at (N\i) {}; }
+		\end{scope}
+
+		% ---- EX p ----
+		%  There exists a path where the next state satisfies p.
+		%  One level-1 child is blue.
+		\begin{scope}[shift={(2*\ColSep,-\RowSep)}]
+			\treecoords \treebg \treeedges
+			\allblack
+			% highlighted edge
+			\draw[be] (N0) -- (N2);
+			% single blue node
+			\node[bn] at (N2) {};
+		\end{scope}
+
+		% ---- E[p U q] ----
+		%  There exists a path where p holds until q.
+		%  Path root -> T2 -> T6 -> T14.  Blue (p): root, T2, T6.  Red (q): T14.
+		\begin{scope}[shift={(3*\ColSep,-\RowSep)}]
+			\treecoords \treebg \treeedges
+			\allblack
+			% highlighted edges
+			\draw[be] (N0) -- (N2);
+			\draw[be] (N2) -- (N6);
+			\draw[re] (N6) -- (N14);
+			% blue (p) nodes
+			\foreach \i in {0,2,6}{ \node[bn] at (N\i) {}; }
+			% red (q) node
+			\node[rn] at (N14) {};
+		\end{scope}
+
+		\end{tikzpicture}
+	}
+\end{center}
+
+\vspace{1em}
+
+\begin{itemize}
+	\item A marking vector $v$ describes the state of a given Petri-net.
+	\begin{itemize}
+		\item An index $i$ of $v$ represents a place in the Petri-net.
+		\item $v[i]$ represents the number of tokens in place $i$ in the given state.
+	\end{itemize}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

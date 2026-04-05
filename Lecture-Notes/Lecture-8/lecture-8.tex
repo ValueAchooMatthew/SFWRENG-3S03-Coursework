@@ -1,0 +1,131 @@
+\ifdefined\iscombined
+	\lecturetitle{Relations}
+\else
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 8} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Relations}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 8 - Relations}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Fault injection involves deliberately introducing faults into the system.
+	\begin{itemize}
+		\item Done to evaluate efficacy of existing tests.
+		\begin{itemize}
+			\item Kinda like coverage metrics.
+		\end{itemize}
+		\item More expensive than coverage metrics.
+	\end{itemize}
+	\item Fault injection can be done in one of two ways:
+	\begin{enumerate}
+		\item Compile-time fault injection.
+		\begin{itemize}
+			\item Introduces faults into the source code.
+			\item Typically done manually.
+			\item Performed in three possible ways:
+			\begin{enumerate}
+				\item Operand replacement.
+				\begin{itemize}
+					\item Ex. Changing $a + b$ to $a + c$.
+				\end{itemize}
+				\item Expression modification.
+				\begin{itemize}
+					\item Ex. Changing $a + b$ to $a - b$.
+				\end{itemize}
+				\item Statement modification.
+				\begin{itemize}
+					\item Ex. Deleting $x \coloneq 1$ from code.
+				\end{itemize}
+			\end{enumerate}
+		\end{itemize}
+		\item Runtime fault injection.
+		\begin{itemize}
+			\item Introduces faults as the program is running.
+			\item Typically automated.
+			\item Typically performed by use of special software triggers.
+		\end{itemize}
+	\end{enumerate}
+	\item A binary relation is a set $R$ representing ordered associations between some sets $A$ and $B$.
+	\begin{itemize}
+		\item $R \subseteq A \times B$.
+		\item Elements are expressed as $(a, b) \in R$.
+		\begin{itemize}
+			\item $a \in A, b \in B$.
+		\end{itemize}
+	\end{itemize}
+	\item Equivalence relations are special kinds of binary relations.
+	\item Equivalence relations $R \subseteq A \times A$ must satisfy the following three properties:
+	\begin{enumerate}
+		\item Reflexivity.
+		\begin{itemize}
+			\item $\forall a \in A; (a, a) \in R$.
+		\end{itemize}
+		\item Symmetry.
+		\begin{itemize}
+			\item $\forall a_1, a_2 \in A; (a_1, a_2) \in R \implies (a_2, a_1) \in R$.
+		\end{itemize}
+		\item Transitivity.
+		\begin{itemize}
+			\item $\forall a_1, a_2, a_3 \in A; (a_1, a_2) \in R \wedge (a_2, a_3) \in R \implies (a_1, a_3) \in R$.
+		\end{itemize}
+	\end{enumerate}
+	\item Binary and equivalence relations are fundamental to test design theory.
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

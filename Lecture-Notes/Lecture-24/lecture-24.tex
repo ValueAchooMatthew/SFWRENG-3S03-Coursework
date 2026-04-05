@@ -1,0 +1,201 @@
+\ifdefined\iscombined
+	\lecturetitle{Software Quality}
+\else
+\documentclass{article}
+\usepackage{changepage}
+\usepackage{centernot}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{comment}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{backgrounds, calc, positioning}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 23} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Software Quality}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 23 - Software Quality}
+
+\setlength{\parindent}{0cm}
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	frame=single,
+	tabsize=4,
+	breaklines=true,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=8pt,
+	xleftmargin=1.5em,
+	framexleftmargin=1.5em
+}
+
+\newcounter{example}
+\renewcommand{\theexample}{\arabic{example}}
+
+\newenvironment{example}[1][]{
+	\refstepcounter{example}
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{\ifx&#1&Example \theexample:\else Example \theexample \ (#1):\fi}
+	\ignorespaces
+}{
+	\vspace{.5em}
+	\end{adjustwidth}
+}
+
+\newcounter{subexample}
+\renewcommand{\thesubexample}{\alph{subexample}}
+
+\newenvironment{subexample}{
+	\setcounter{step}{0}
+	\refstepcounter{subexample}
+	\vspace{1em}\par\noindent
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{(\thesubexample)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newenvironment{solution}{
+	\vspace{.5em}
+	\par
+	\begin{adjustwidth}{1.5em}{}
+	\textbf{{Solution:}}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1em}\par\noindent
+	\ignorespaces\noindent\textbf{(\thestep)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Software quality of a system is a measure of its current and future risk.
+	\item The objective of testing is to increase software quality.
+	\begin{itemize}
+		\item Planning is the process of generating mechanisms to increase software quality.
+		\begin{itemize}
+			\item Involves creating or using an existing testing strategy.
+		\end{itemize}
+		\item Monitoring is the process of verifying that such planning effectively increases software quality.
+	\end{itemize}
+	\item It is better to create imperfect tests early than perfect tests later.
+	\begin{itemize}
+		\item Acts as a form of review.
+		\item Encourages making incremental improvements.
+	\end{itemize}
+	\item Most defects originate from requirements, not code.
+	\begin{itemize}
+		\item \emph{Aside: Lowkey cap but whatever ig}.
+	\end{itemize}
+	%TODO: Ask if anyone has examples of focus risks and scope
+	\item All testing strategies have three major components.
+	\begin{enumerate}
+		\item Focus risks.
+		\begin{itemize}
+			\item What kinds of risks the testing strategy is attempting to address.
+		\end{itemize}
+		\item Scope.
+		\begin{itemize}
+			\item Which business needs the testing strategy is attempting to address.
+		\end{itemize}
+		\item Details.
+		\begin{itemize}
+			\item Specifies important considerations of the testing strategy.
+			\item For example:
+			\begin{itemize}
+				\item How risks are identified.
+				\item How risks can be minimized.
+				\item What metrics can help track risks.
+			\end{itemize}
+		\end{itemize}
+	\end{enumerate}
+	\item Different testing strategies optimize software quality with respect to different constraints.
+	\item Some examples of widely used testing strategies include:
+	\begin{itemize}
+		\item The cleanroom strategy.
+		\begin{itemize}
+			\item Places an emphasis on the identification of risks.
+		\end{itemize}
+		\item The Software Reliability in Engineering Testing (SERT) strategy.
+		\begin{itemize}
+			\item Places an emphasis on creating many tests.
+		\end{itemize}
+		\item The eXtreme Programming (XP) strategy.
+		\begin{itemize}
+			\item \emph{Aside: Can't remember what she said about this one and it's not on the slides}.
+			\item \emph{Aside: According to Google, emphasizes early and incremental automated testing}.
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

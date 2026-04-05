@@ -1,0 +1,129 @@
+\ifdefined\iscombined
+	\lecturetitle{Testing Levels}
+\else
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{comment}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 4} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Testing Levels}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 4 - Testing Levels}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item A test's `testing level' describe the scope of the software being tested.
+	\item The three testing levels used in the course are:
+	\begin{enumerate}
+		\item Unit.
+		\begin{itemize}
+			\item Tests small, meaningful pieces of the code.
+			\item Always done as white-box tests.
+			\item Generally inexpensive to develop.
+			\item Should be run as often as possible.
+		\end{itemize}
+		\item Integration.
+		\begin{itemize}
+			\item Tests how units work together.
+			\item Done by treating units are black-boxes.
+			\item Low to moderately expense to develop.
+			\item Should be done after the creation of every new unit.
+		\end{itemize}
+		\item System.
+		\begin{itemize}
+			\item Tests the entire system.
+			\item May be done as white or black box tests.
+			\item Important functional and non-functional tests are typically done at this level.
+			\item Most expensive testing level.
+			\item Should be done prior to every release.
+		\end{itemize}
+	\end{enumerate}
+	\item There are three primary approaches to designing good integration tests.
+	\begin{enumerate}
+		\item The big-bang approach:
+		\begin{itemize}
+			\item Create integration tests for all units at once.
+			\item TLDR; shit, dumb, cringe.
+		\end{itemize}
+		\item The top-down approach:
+		\begin{itemize}
+			\item Create integration tests starting with the largest units/components first.
+			\item TLDR; Mid asf.
+		\end{itemize}
+		\item The bottom-up approach:
+		\begin{itemize}
+			\item Create integration tests starting with the smallest units/components first.
+			\item TLDR; based, epic.
+		\end{itemize}
+	\end{enumerate}
+	\item System tests are designed to do one of two things:
+	\begin{enumerate}
+		\item Verify the system.
+		\begin{itemize}
+			\item Ensure that the system meets agreed upon specifications.
+		\end{itemize}
+		\item Validate the system.
+		\begin{itemize}
+			\item Ensure that the system delivers on what its user(s) want.
+			\item Validating system tests are also called acceptance tests.
+		\end{itemize}
+	\end{enumerate}
+	\item Tests can be developed manually or by an automated process.
+	\begin{itemize}
+		\item Context and the kind of test being developed dictate the method by which it should be developed.
+	\end{itemize}
+\end{itemize}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi

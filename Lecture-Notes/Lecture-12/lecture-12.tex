@@ -1,0 +1,259 @@
+\ifdefined\iscombined
+	\lecturetitle{Examples of Equivalence Partitions}
+\else
+\documentclass{article}
+\usepackage{changepage}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{comment}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{sectsty}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{mathtools}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge Lecture 12} \\
+	\vspace{-1em}
+	\rule{\textwidth/4}{.01em} \\
+	\vspace{-.25em}
+	{\Large Examples of Equivalence Partitions}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\fancyhead{}
+\fancyhead[L]{\today}
+\fancyhead[R]{Lecture 12 - Examples of Equivalence Partitions}
+
+\setlength{\parindent}{0cm}
+
+
+\lstset{
+	basicstyle=\ttfamily\small,
+	frame=single,
+	tabsize=4,
+	breaklines=true,
+	numbers=left,
+	numberstyle=\tiny,
+	numbersep=8pt,
+	xleftmargin=1.5em,
+	framexleftmargin=1.5em
+}
+
+\newcounter{example}
+\renewcommand{\theexample}{\arabic{example}}
+
+\newenvironment{example}[1][]{
+	\refstepcounter{example}
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{\ifx&#1&Example \theexample:\else Example \theexample \ (#1):\fi}
+	\ignorespaces
+}{
+	\vspace{.5em}
+	\end{adjustwidth}
+}
+
+\newcounter{subexample}
+\renewcommand{\thesubexample}{\alph{subexample}}
+
+\newenvironment{subexample}{
+	\setcounter{step}{0}
+	\refstepcounter{subexample}
+	\vspace{1em}\par\noindent
+	\begin{adjustwidth}{1.5em}{}
+	\noindent\textbf{(\thesubexample)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newenvironment{solution}{
+	\vspace{.5em}
+	\par
+	\begin{adjustwidth}{1.5em}{}
+	\textbf{{Solution:}}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1em}\par\noindent
+	\ignorespaces\noindent\textbf{(\thestep)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+\pagestyle{fancy}
+
+\fi
+
+\begin{itemize}
+	\item Test coverage is often best determined using a system's control flow graph.
+	\item The number of inputs to a program does not necessarily determine the number of equivalence partitions that need to be made.
+\end{itemize}
+
+\begin{example}
+	Say we wanted to test the behaviour of the following program:
+
+	\vspace{1em}
+
+	\begin{minipage}{0.9\linewidth}
+		\begin{algorithm}[H]
+			\caption{The program we wish to test}
+			\begin{algorithmic}[1]
+				\Procedure{Program}{$x, y, z$}
+					\If{$x \le 0$}
+						\State \Return $-1$
+					\EndIf
+					\If{$z \le 0$}
+						\State \Return $0$
+					\EndIf
+					\If{$x \ge 10$}
+						\State $r \coloneq x \cdot 2$
+					\Else
+						\State $r \coloneq x$
+					\EndIf
+					\If{$y \ne 0$}
+						\State $r \coloneq r - y$
+					\EndIf
+						\State \Return $r$
+				\EndProcedure
+			\end{algorithmic}
+		\end{algorithm}
+	\end{minipage}
+
+	\vspace{2em}
+
+	Assume $x, y$, and $z$ can take on the value of any real number. It would be impossible actually to try and test all possible values of $x, y$, and $z$ to verify the program works as intended.  How many tests would it take to adeque
+\end{example}
+
+\begin{subexample}
+	How could we break down the program into as few equivalence classes as possible verify its behaviour?
+\end{subexample}
+
+\begin{solution}
+	To break down the program into equivalence classes, we need to consider each variable independently and see (by inspection) if the program behaves differently (if at all) when that variable changes. \\
+
+	\begin{step}
+		Construct equivalence classes for $x$.
+	\end{step}
+
+	For $x$, we can see that the program may returns different things when:
+	\begin{itemize}
+		\item $x \le 0$.
+		\item $x \ge 10$. \\
+	\end{itemize}
+
+	This also means that when $0 < x < 10$, the program also behaves differently (since some other return statement is fired). Therefore, we could break $x$ into the following three equivalence classes:
+
+	\begin{gather*}
+		\set{x \colon x \le 0}, \quad \set{x \colon 0 < x < 10}, \quad \set{x \colon 10 \le x} \\
+	\end{gather*}
+
+	\begin{step}
+		Construct equivalence classes for $y$.
+	\end{step}
+
+	Likewise, we can observe that the program behaves differently when:
+	\begin{itemize}
+		\item $y \neq 0$.
+	\end{itemize}
+
+	And hence when $y = 0$ as well. So, we can construct the following equivalence classes for $y$:
+
+	\begin{gather*}
+		\set{y \colon y \ne 0}, \quad \set{y \colon y = 0} \\
+	\end{gather*}
+
+	\begin{step}
+		Construct equivalence classes for $z$.
+	\end{step}
+
+	In the interest of not beating a dead horse, we can conclude by the exact same process that we would need the following equivalence classes to verify the behaviour of the program against $z$:
+
+	\begin{gather*}
+		\set{z \colon 0 \le z}, \quad \set{z \colon z < 0} \\
+	\end{gather*}
+
+	This therefore gives the following set of equivalence partitions for each variable: \\
+
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Variable} & \textbf{Equivalence Classes} \\
+			\hline
+			$x$ & $\{ x : x \le 0 \}$, $\{ x : 0 < x < 10 \}$, $\{ x : x \ge 10 \}$ \\
+			\hline
+			$y$ & $\{ y : y = 0 \}$, $\{ y : y \ne 0 \}$ \\
+			\hline
+			$z$ & $\{ z : z > 0 \}$, $\{ z : z \le 0 \}$ \\
+			\hline
+		\end{tabular}
+	\end{center}
+
+\end{solution}
+
+\begin{subexample}
+	Using the equivalence classes you constructed, how many tests are required in total to adequately test the program?
+\end{subexample}
+
+\begin{solution}
+	The total number tests required for any program with $n$ input variables ($x_1, \ldots, x_n$) partitioned into a minimal of equivalence classes is given by:
+
+	\begin{gather*}
+		\left(\text{\# of equivalence classes for $x_1$}\right) \ldots \left(\text{\# of equivalence classes for $x_n$}\right) \\
+	\end{gather*}
+
+	So using our equivalence classes, our program would need $3 \cdot 2 \cdot 2 = 12$ tests in total.
+\end{solution}
+
+\ifdefined\iscombined
+	\newpage
+\else
+	\end{document}
+\fi
