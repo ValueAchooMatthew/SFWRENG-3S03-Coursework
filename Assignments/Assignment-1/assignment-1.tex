@@ -1,0 +1,1001 @@
+\documentclass[10pt]{article}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{braket}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{changepage}
+\usepackage{sectsty}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xltabular}
+\usepackage{listings, xcolor}
+\usepackage{courier}
+\usepackage{color}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge SFWRENG 3S03} \\
+	\vspace{-1em}
+	\rule{\textwidth/2}{.01em} \\
+	\vspace{-.25em}
+	{\Large Assignment 1}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large David Olejniczak, 400435021 \quad Jingyue Wu, 400448520} \\
+	{\large Krish Panchal, 400445591 \quad Matthew Farah, 400468251}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\lstset{
+	tabsize = 4,
+	showstringspaces = false,
+	numbers = left,
+	commentstyle = \color{teal},
+	keywordstyle = \color{blue},
+	stringstyle = \color{red},
+	rulecolor = \color{black},
+	basicstyle = \ttfamily,
+	breaklines = true,
+	numberstyle = \small,
+}
+
+\fancyhead{}
+\fancyhead[L]{D. Olejniczak, J. Wu, K. Panchal, M. Farah}
+\fancyhead[R]{SFWRENG 3S03 - Assignment 1}
+
+\AtBeginEnvironment{align}{\setcounter{equation}{0}}
+
+\setlength{\parindent}{0cm}
+
+\setcounter{tocdepth}{3}
+\hypersetup{bookmarksopen=true, bookmarksopenlevel=2, bookmarksdepth=3}
+
+\newcounter{chapter}
+\renewcommand{\thechapter}{\Roman{chapter}}
+
+\newcounter{question}
+\renewcommand{\thequestion}{\arabic{question}}
+
+\newenvironment{question}[2]{
+	\refstepcounter{question}
+	\setcounter{subquestion}{0}
+	\setcounter{step}{0}
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{section}{\protect{\large{Question \thequestion \, - #1}}}
+	\vspace{1em}
+	\par
+	\begin{adjustwidth}{1.5em}{}
+	{[#2 marks]}
+	\par
+	\noindent\textbf{Question \thequestion}
+	\ignorespaces
+	\vspace{.2cm}
+	\par
+}{
+	\vspace{.5em}
+	\end{adjustwidth}
+}
+
+\newenvironment{solution}{
+	\vspace{.5em}
+	\par
+	\begin{adjustwidth}{1.5em}{}
+	\textbf{{Solution:}}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newcounter{subquestion}
+\renewcommand{\thesubquestion}{\alph{subquestion}}
+
+\newenvironment{subquestion}[1]{
+	\refstepcounter{subquestion}
+	\setcounter{step}{0}
+	\phantomsection
+	\addcontentsline{toc}{subsection}{\protect{\large{Part \thequestion.\thesubquestion}}}
+	\vspace{1em}
+	\begin{adjustwidth}{1.5em}{}
+	[#1 marks]
+	\par
+	\vspace{.25em}
+	\par
+	\noindent\textbf{(\thesubquestion)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\makeatother
+
+\makeatletter
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1em}\par\noindent
+	\ignorespaces\noindent\textbf{(\thestep)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+}
+
+\newenvironment{transcript}[1]{
+	\vspace{.5em}
+	\par
+	\noindent
+	\emph{#1:}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{.5em}
+}
+
+\makeatother
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\renewcommand{\arraystretch}{1.8}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\begin{question}{Testing with generative AI}{10}
+	Suppose you are developing a game. This action-adventure game involves
+	exploration in a post-apocalyptic version of McMaster University, where up to eight
+	players may be accosted by zombies, mutated professors, angry Deans, killer
+	squirrels, and more. Gameplay can be both competitive and cooperative. The game
+	is to be released on the PS5, Xbox Series X, Nintendo Switch and, for some reason
+	known only to your designers, the Sega Genesis, which is 16-bit only and hasn't been
+	manufactured since 1997.
+\end{question}
+
+\begin{subquestion}{3}
+	Ask your favourite generative AI technology (e.g., ChatGPT, Bard) to
+	specify three types of tests for such a game. Clearly state both the prompt(s)
+	you used, and the response the generative AI provided.
+\end{subquestion}
+
+\begin{solution}
+	\begin{transcript}{Prompt}
+		For the following game, specify 3 types of tests: Suppose you are developing a game. This action-adventure game involves exploration in a post-apocalyptic version of McMaster University, where up to eight players may be accosted by zombies, mutated professors, angry Deans, killer squirrels, and more. Gameplay can be both competitive and cooperative. The game is to be released on the PS5, Xbox Series X, Nintendo Switch and, for some reason known only to your designers, the Sega Genesis, which is 16-bit only and hasn't been manufactured since 1997.
+	\end{transcript}
+
+	\begin{transcript}{Response}
+		Here are 3 solid categories of tests you could define for this game, with examples tailored to your scenario: \\
+
+		1. Functional / Gameplay Tests \\
+
+		These verify that the core mechanics and rules of the game work correctly. What you'd test: \\
+		\begin{itemize}
+			\item Players can explore the McMaster map without getting stuck in terrain.
+			\item Zombies, mutated professors, Deans, squirrels, etc.\ spawn correctly.
+			\item Combat systems (damage, health, abilities, co-op interactions).
+			\item Multiplayer rules --- max 8 players, cooperative vs competitive modes.
+			\item Saving/loading progress and inventory behavior. \\
+		\end{itemize}
+
+		Examples: \\
+		\begin{itemize}
+			\item Verify that when a player defeats a zombie, XP and loot drop correctly.
+			\item Check that reviving teammates works only in co-op mode. \\
+		\end{itemize}
+
+		Goal: make sure the game behaves as designed. \\
+
+		2. Platform Compatibility \& Performance Tests \\
+
+		Since your game runs on PS5, Xbox Series X, Nintendo Switch, and Sega Genesis, this is critical. What you'd test: \\
+		\begin{itemize}
+			\item Frame rate and memory usage on each platform.
+			\item Input handling (controllers differ across consoles).
+			\item Graphics scaling --- especially downgrading to 16-bit Genesis limits.
+			\item Network stability across platforms.
+			\item Load times and crashes. \\
+		\end{itemize}
+
+		Examples: \\
+		\begin{itemize}
+			\item Ensure Switch maintains stable FPS in multiplayer fights.
+			\item Verify Genesis version doesn't exceed memory or sprite limits.
+			\item Test cross-platform multiplayer latency. \\
+		\end{itemize}
+
+		Goal: ensure the same game works reliably on very different hardware. \\
+
+		3. Multiplayer / Network Tests \\
+
+		Because up to 8 players can play together, networking must be tested separately. What you'd test: \\
+		\begin{itemize}
+			\item Lobby creation and matchmaking.
+			\item Syncing player positions and enemy AI.
+			\item Handling disconnections or lag spikes.
+			\item Anti-cheat and fairness in competitive modes. \\
+		\end{itemize}
+
+		Examples: \\
+		\begin{itemize}
+			\item Simulate one player disconnecting mid-boss fight --- does the session recover?
+			\item Stress test with 8 players fighting multiple enemies simultaneously. \\
+		\end{itemize}
+
+		Goal: prevent desyncs, crashes, or unfair gameplay online.
+	\end{transcript}
+\end{solution}
+
+\begin{subquestion}{2}
+	State two things that you think are poor, incorrect, or unclear about
+	the answers given by the generative AI technology in (a). For each, state why
+	you think it's unhelpful.
+\end{subquestion}
+
+\begin{solution}
+	Two things that are poor in the generative AI response are that it makes too many assumptions, and due to this, it does not consider many details. The answer given by ChatGPT made many assumptions without asking for clarification, whereas a human would naturally ask for more information about the game before designing the tests. For example, the response assumes gameplay mechanics like XP and loot drop, and that the game will be cross platform. These were not mentioned in the initial specification, and should be clarified before creating tests. Since the resulting tests may be unrelated and not applicable to the game we are developing, the result is likely unhelpful. Due to the high level assumptions, many details are also not considered, and the response contains mostly vague statements. For example, concepts like ``sprite limits'' and ``enemy AI'' are unclear and may be misleading or interpreted differently by the developer, making the answers unhelpful. It also does not consider how the Sega Genesis could be tested, as many of the mentioned methods may not be possible for the much older platform.
+\end{solution}
+
+\begin{subquestion}{2}
+	State two things that you think are good, valid, or helpful about the
+	answers given by the generative AI technology in (a). For each, state why you
+	think it's helpful.
+\end{subquestion}
+
+\begin{solution}
+	Something good that the generative AI provided is the identification of the key testing areas. Although the details involved many assumptions and vague concepts, the main categories were: Functional/Gameplay, Platform Compatibility/Performance, and Multiplayer. These categories are reasonable and may provide a good starting point to build on. Additionally, the answer provides examples of tests for each of the categories, which can be helpful for illustrating what each type of test should be targeting. However, these examples do include some assumptions, so they should only be used as a guide.
+\end{solution}
+
+\begin{subquestion}{3}
+	Based on what you have learned from this, without using generative
+	AI, state three tests for the game briefly outlined above. In at most two
+	sentences, explain why you prefer these tests to the ones presented in (a).
+\end{subquestion}
+
+\begin{solution}
+	Partition Testing can be used to divide the input domain into disjoint groups to reduce the number of test cases required while maintaining coverage. This is beneficial for testing the game due to the large number of inputs like characters and gameplay mechanics. Additionally, the large number of supported platforms could be partitioned. The Sega Genesis platform would likely be isolated from the rest. \\
+
+	Fuzz testing can be used to check how the game responds to randomized inputs. Since the game involves exploration and interaction with many different types of events, it is important to test how it handles unexpected input to find vulnerabilities and improve security. \\
+
+	Boundary testing can be used to test how the game reacts to inputs on semantically significant boundaries. Due to the scale and complexity of the game, this is crucial for catching defects that other cases may not consider. \\
+
+	The three tests listed above are preferred over the ones provided by ChatGPT because they are more specific and focus on a systematic approach to detecting defects and maximizing test coverage. Partition, fuzz, and boundary testing focus on how the game should be tested without making large assumptions and relying on details initially. Whereas the responses given by ChatGPT listed out general areas to consider, which may not be as helpful.
+\end{solution}
+
+\begin{question}{Testing with Junit}{32}
+	Below you'll find four programs, each containing fault (or defects). Each also includes
+	test inputs that will result in a failure.
+
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 1:}]
+/**
+* Find last index of element
+*
+* @param x array to search
+* @param y value to look for
+* @return last index of y in x; -1 if absent
+* @throws NullPointerException if x is null
+*/
+public static int findLast (int[] x, int y)
+	{
+		for (int i=x.length-1; i > 0; i--)
+		{
+			if (x[i] == y)
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+// test: x=[2, 3, 5]; y=2; Expected = 0
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 2:}]
+/**
+* Finds last index of zero
+*
+* @param x array to search
+*
+* @return last index of 0 in x; -1 if there is no zero
+* @throws NullPointerException if x is null
+*/
+public static int lastZero (int[] x)
+{
+	for (int i = 0; i < x.length; i++)
+	{
+		if (x[i] == 0)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+// test: x=[0,1,0]; Expected = 2
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 3:}]
+/**
+* Counts positive elements in array
+*
+* @param x array to search
+* @return number of positive elements in x
+* @throws NullPointerException if x is null
+*/
+public static int countPositive (int[] x)
+{
+	int count = 0;
+	for (int i=0; i < x.length; i++)
+	{
+		if (x[i] >= 0)
+		{
+			count++;
+		}
+	}
+	return count;
+}
+// test: x=[-4, 2, 0, 2]
+// Expected = 2
+	\end{lstlisting}
+	
+	\vspace{1cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Program 4:}]
+/**
+* Count odd or positive elements in an array
+*
+* @param x array to search
+* @return count of odd or positive elements in x
+* @throws NullPointerException if x is null
+*/
+public static int oddOrPos (int[] x)
+{
+	// Effects: if x is null throw NullPointerException
+	// else return the number of elements in x that
+	// are either odd or positive (or both)
+	int count = 0;
+	for (int i = 0; i < x.length; i++)
+		{
+		if (x[i]%2 == 1 || x[i] > 0)
+		{
+			count++;
+		}
+	}
+	return count;
+}
+// test: x=[-3, -2, 0, 1, 4]
+// Expected = 3
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	Answer the following questions about each program. (The mark allocation below is
+	specified per program; that is, your answers are worth 8 marks per program for a total
+	of 32 marks for this question. Be sure to remember the definitions of failure, fault and
+	error given in lecture.)
+\end{question}
+
+\begin{subquestion}{1}
+	Explain what is wrong with the given code. Describe the fault precisely by
+	proposing a modification to the code.
+\end{subquestion}
+
+\begin{solution}
+	\begin{step}
+		Program 1.
+	\end{step}
+
+	The for-loop condition is incorrect. The loop stops before $i = 0$ so the function never checks $x[0]$. The fix would be in the $i > 0$ declaration. Change the declaration to $i \ge 0$, as follows: \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+for (int i = x.length - 1; i >= 0; i--)
+	\end{lstlisting}
+
+	\begin{step}
+		Program 2.
+	\end{step}
+
+	Currently the code returns the first 0 found in the array which is incorrect. It should return the last 0 found in the array. The easiest fix to this would be to reverse the for loop so it begins searching from the right side of the array, as follows: \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+for (int i = x.length - 1; i >= 0; i--)
+	\end{lstlisting}
+
+	\begin{step}
+		Program 3.
+	\end{step}
+
+	The program incorrectly counts numbers in the array that equal zero, as opposed to being strictly positive. This is due to the $\ge$ sign in the if statement. I would propose modifying the condition in the if statement to: \\
+
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+if (x[i] > 0)
+	\end{lstlisting}
+
+	\begin{step}
+		Program 4.
+	\end{step}
+
+	The program incorrectly neglects to count negative, odd integers in the array due to the condition in the if statement being that $x[i] \% 2 = 1$. For negative odd numbers, it is actually the case that $x[i] \% 2 = -1$, and so I would modify the code as such to fix this: \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+if (x[i]%2 == 1 || x[i]%2 == -1 || x[i] > 0)
+	\end{lstlisting}
+\end{solution}
+
+\begin{subquestion}{2}
+	If possible, give a test case that does not execute the fault. If this is not
+	possible, briefly explain why.
+\end{subquestion}
+
+\begin{solution}
+	\begin{step}
+		Program 1.
+	\end{step}
+	
+	A test case that does not execute a fault is $(x = \text{Null}, y = 0)$. This is because the program reaches the NullPointerException error before it executes the fault.
+
+	\begin{step}
+		Program 2.
+	\end{step}
+
+	There is no test case that would not execute the fault due to the fault lying in the for loop's syntax. Thus no matter the input to the function the for loop code will run 0 to $x.\text{length}$ times. Even $x$ being null or an empty array will still execute the setup line in the for loop.
+
+	\begin{step}
+		Program 3.
+	\end{step}
+
+	The test case $x = \{1, 2, 3\}$ does not execute the fault since every number in the list is positive, and the program correctly identifies positive numbers in a list as positive (its problem is that it is too inclusive of positive numbers, not exclusive).
+
+	\begin{step}
+		Program 4.
+	\end{step}
+
+	The test case $x = \{1, 2, 3\}$ does not execute the fault since the program correctly identifies that each element in $x$ is positive and increments count 3 times, returning the correct, expected result of 3.
+\end{solution}
+
+\begin{subquestion}{2}
+	If possible, give a test case that executes the fault but does not result in
+	an error state. If this is not possible, briefly explain why.
+\end{subquestion}
+
+\begin{solution}
+	\begin{step}
+		Program 1.
+	\end{step}
+
+	A test case that executes the fault but does not reach an error state is $(x = [-3,-2,0,1,4], y = 0)$. Expected output is 2. Actual output is 2. This is because the fault is only reached when searching for the first index in the array.
+
+	\begin{step}
+		Program 2.
+	\end{step}
+
+	A test case that executes the fault but does not result in an error state is $x = [0]$. The fault is executed in the for loop setup, however due to this array only having one value it matches the correct code that would have the same for loop variables for this test case. Thus the program state of the incorrect code and the correct code would be identical and both would return the correct answer.
+
+	\begin{step}
+		Program 3.
+	\end{step}
+
+	The test case $x = \{0, 0, 0\}$ does execute the fault since the program will return 3 as opposed to 0 (since there are no positive members of the list) for the reason mentioned earlier.
+
+	\begin{step}
+		Program 4.
+	\end{step}
+
+	The test case $x = \{-1\}$ does execute the fault since $-1 \le 0$ and $-1 \% 2 = -1$, and so neither operand in the or operator evaluates to true, leading to the program returning 0. This is contrary to the correct, expected result of 1, since $-1$ is indeed an odd number.
+\end{solution}
+
+\begin{subquestion}{2}
+	If possible, give a test case that results in an error state, but not a failure.
+	If this is not possible, briefly explain why. (Hint: don't forget about the program
+	counter.)
+\end{subquestion}
+
+\begin{solution}
+	\begin{step}
+		Program 1.
+	\end{step}
+
+	A test case that reaches an error state but not a failure is $(x=[3,4,5], y=6)$. Expected output is $-1$. Actual output is $-1$. The loop finishes its runtime completely and returns $-1$. If the loop body was changed to include $i=0$, the system will still reach the return value of $-1$. There is no failure because the returned value is still correct.
+
+	\begin{step}
+		Program 2.
+	\end{step}
+
+	A test case that results in an error state but not a failure is $x = [0, 1]$. The code does not fail due to the final answer being correct. However the state of the $i$ value in the for loop would differ from the correct code at the start due to it not being in reverse. This code would enter an error state immediately then as it differs from the correct behaviour.
+
+	\begin{step}
+		Program 3.
+	\end{step}
+
+	The test case $x = \text{null}$ produces an error state in the program since attempting to run $x.\text{length}$ will return a NullPointerException, which is not handled gracefully by the program (although this is acknowledged in the javadoc comments above). I also can't think of any way in which the program counter may be a problem since $i$ is always at least zero and strictly less than the length of $x$, and hence I can't see it being possible for the program to try and point to a region of memory not allocated to itself.
+
+	\begin{step}
+		Program 4.
+	\end{step}
+
+	The test case $x = \text{null}$ produces an error state in the program since attempting to run $x.\text{length}$ will return a NullPointerException, which is not handled gracefully by the program (although this is acknowledged in the javadoc comments above). I also can't think of any way in which the program counter may be a problem since $i$ is always at least zero and strictly less than the length of $x$, and hence I can't see it being possible for the program to try and point to a region of memory not allocated to itself.
+\end{solution}
+
+\begin{subquestion}{1}
+	For the test case given with the program, describe the first error state that's
+	reached.
+\end{subquestion}
+
+\begin{solution}
+	\begin{step}
+		Program 1.
+	\end{step}
+
+	Given $(x = [2, 3, 5], y = 2)$, the first error state occurs when $i=0$ and the loop conditions have been evaluated. Currently, $i > 0$ evaluates to False so the loop will break prematurely and return $-1$. In the correct program with the modification, the guard would be true at $i = 0$, so it would check $x[0]$ and return 0, the correct answer.
+
+	\begin{step}
+		Program 2.
+	\end{step}
+
+	For the test case $x = [0,1,0]$ the first error state reached is $i = 0$ immediately when $i$ is initialized in the code. The correct code would initialize $i$ to 2, not to 0. Thus the two programs' states diverge right at the start leading to the first error state being when variable $i$ is initialized in the loop.
+
+	\begin{step}
+		Program 3.
+	\end{step}
+
+	The third value of $x$ in the test case given ($x[2] = 0$) produces the first error state in the program since it will incorrectly conclude 0 is a positive number, increment count, then output 3, as opposed to the correct and expected value of 2.
+
+	\begin{step}
+		Program 4.
+	\end{step}
+
+	The first value of $x$ in the test case given ($x[0] = -3$) produces the first error state in the program since it will incorrectly conclude $-3$ is neither a positive nor odd number. It will thus neglect to increment count, and so outputs 2, as opposed to the correct and expected value of 3.
+\end{solution}
+
+\begin{question}{Testing parts of large systems}{10}
+	Suppose you are developing an online version of Settlers of \href{https://en.wikipedia.org/wiki/Catan}{Catan}. \\
+
+	It is common practice in game design to approximate the level of difficulty by simply
+	rigging the game. For example, when trailing the human player, the game may
+	generate not-so-random rolls of dice that benefit the agent. To avoid flipping tables,
+	it is better to build some kind of a learning mechanism into the agent, e.g.,
+	reinforcement learning. However, this added functionality complicates testing. \\
+
+	At each turn every player can: roll the dice; collect resources accordingly; offer a trade
+	of resource cards to other players which they can accept, refuse, or counter with an
+	alternative offer; and build developments. \\
+
+	Suppose you are developing the core module of the game with the basic game
+	dynamics and rules. You only want to make sure agents can execute these actions
+	but for now, you are not really concerned whether those actions are actually useful
+	actions.
+\end{question}
+
+\begin{subquestion}{1.5}
+	Given the following interface, how would you decouple the agents'
+	behaviour from your current focus, i.e., core game dynamics? Explain the idea and
+	justify it.
+
+	\vspace{.5cm}
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, escapeinside={(*@}{@*)}, title = {\Large Interface:}]
+public interface CatanAgent {
+	void init(int playerId);
+	Move chooseInitialSettlement(GameState state);
+	Move chooseInitialRoad(GameState state);
+	Move chooseMove(GameState state);
+	Map<ResourceType, Integer> chooseDiscard(GameState state,int discardCount);
+	ResourceType chooseResource(GameState state);
+	int chooseRobberTarget(GameState state, List<Integer> possibleTargets);
+	DevelopmentCard chooseDevelopmentCard(GameState state);
+}
+	\end{lstlisting}
+
+	\vspace{1cm}
+
+	Hint: the core game functionality will invoke each agent (typically four of them in a
+	game) to act when it's their turn, but you do not want to start the development with
+	the functionality that's behind this interface.
+\end{subquestion}
+
+\begin{solution}
+	The agent's behaviour can be decoupled from the core game dynamics by using a stub that implements the CatanAgent interface. Since we are focusing on the core module of the game, which will invoke each agent, and we do not want to start developing the agent's internal functionality, a stub is a viable solution. To accurately represent the final functionality of the agent for the testing and development of the core game module, each of the methods in the stub can return predefined canned data. Then, the core game module is able to invoke agent stub instances as if they were fully implemented. This approach fully decouples the agent and core game dynamics while also minimizing the need for additional code since the stub data can be specifically defined for each agent action to test.
+\end{solution}
+
+\begin{subquestion}{3}
+	Implement the idea in Java.
+\end{subquestion}
+
+\begin{solution}
+	A stub class is created and implements the CatanAgent interface. The implemented Java code demonstrates how a stub could be used and contains some assumptions about the interfaces of the provided classes like GameState, Move, and DevelopmentCard. \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+class CatanAgentStub implements CatanAgent {
+
+    @Override
+    public void init(int playerId) {
+        // Skip initialization
+    }
+
+    @Override
+    public Move chooseInitialSettlement(GameState state) {
+        return state.getSettlements().get(0);
+    }
+
+    @Override
+    public Move chooseInitialRoad(GameState state) {
+        return state.getRoads().get(0);
+    }
+
+    @Override
+    public Move chooseMove(GameState state) {
+        return state.getMoves().get(0);
+    }
+
+    @Override
+    public Map<ResourceType, Integer> chooseDiscard(
+            GameState state, int discardCount) {
+        result = new HashMap<>();
+        result.put(state.getResources().get(0), discardCount);
+        return result;
+    }
+
+    @Override
+    public ResourceType chooseResource(GameState state) {
+        return state.getResources().get(0);
+    }
+
+    @Override
+    public int chooseRobberTarget(GameState state,
+            List<Integer> possibleTargets) {
+        return possibleTargets.get(0);
+    }
+
+    @Override
+    public DevelopmentCard chooseDevelopmentCard(GameState state) {
+        return state.getDevelopmentCards().get(0);
+    }
+}
+	\end{lstlisting}
+\end{solution}
+
+\begin{subquestion}{3}
+	What other solutions can you envision here? Name a solution you would
+	anticipate from a software developer who is not familiar with the techniques you
+	used. List 3-4 convincing points against their solution and in favor of yours.
+\end{subquestion}
+
+\begin{solution}
+	A solution that a software developer who is less familiar with testing techniques may use is to add additional logic directly into the core module of the game to hardcode or bypass interactions with the agent. This is not ideal because: \\
+	\begin{enumerate}
+		\item The resulting core logic will not match what the final connection between the two systems will be. As a result, the core module will be fragile during testing and will not be reusable or extendable during development.
+		\item It will require the internal functionality to be changed and retested when the agent interface functionality is implemented later.
+		\item Using a stub avoids these issues by connecting with the core module with an interface that will be functionally identical to the final implementation by using canned data.
+		\item Instead of adding extra logic into the core module, the decoupling happens within the agent class. Therefore, the core module can be tested independently without needing extra consideration for an unimplemented agent class. \\
+	\end{enumerate}
+\end{solution}
+
+\begin{subquestion}{2.5}
+	What would you do if you realized no one in your company/unit/team
+	knows about the techniques you used in this exercise? To whom, how, and what would
+	you communicate to improve the software engineering process? What would be your
+	expectations? How does this question relate to your engineering practice, e.g., as
+	outlined by CEAB?
+\end{subquestion}
+
+\begin{solution}
+	If no one in the company or team is aware of testing techniques, I would start by communicating with leadership like a manager or tech lead, and explain the benefits of test driven development and proper testing techniques in the software development process. I would also hold thorough knowledge transferring sessions with all members of the team to educate and demonstrate these testing concepts. Proper testing fundamentals during software engineering are crucial because failures can be severe, and untested software is irresponsible engineering. I would expect the team to understand and gradually begin integrating proper testing concepts into their development workflow. This question directly relates with engineering guidelines and ethics outlined by CEAB, and shows the importance of building testable software, especially when designing a system that could create catastrophic results on failure.
+\end{solution}
+
+\begin{question}{Test-driven development (TDD)}{18}
+	You are developing a simple calculator software, following test-driven principles. The
+	next functionality you need to add is the \texttt{divide()} method with the usual semantics.
+	Execute the main steps of TDD, in at least two iterations.
+\end{question}
+
+\begin{subquestion}{2}
+	Develop a reasonable test suite to start the development of the
+	functionality. Define at least two unit tests.
+\end{subquestion}
+
+\begin{solution}
+	Test case 1 will test division by two positive integers ($8/2$). This tests the normal functionality of the function. \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+@Test
+public void testedivbyints() {
+    simpleDivide simpleDivide = new simpleDivide();
+    int result = simpleDivide.divide(8, 2);
+    assertEquals(4.0, result, 0.0001);
+}
+	\end{lstlisting}
+
+	Test case 2 will test division by 0 to ensure the function will handle an expected division error correctly. \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+@Test
+public void testdivbyzero(){
+    try {
+        simpleDivide simpleDivide = new simpleDivide();
+        int result = simpleDivide.divide(8, 0);
+        fail("Expected Error was not thrown");
+    } catch (ArithmeticException e) {
+        assertEquals("Error - Division by zero",
+            e.getMessage());
+    }
+}
+	\end{lstlisting}
+\end{solution}
+
+\begin{subquestion}{2}
+	Develop the functionality until it passes the tests.
+\end{subquestion}
+
+\begin{solution}
+	Current divide function: \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+public int divide(int x, int y) {
+    if (y == 0) {
+        throw new ArithmeticException(
+            "Error - Division by zero");
+    }
+    return x/y;
+}
+	\end{lstlisting}
+\end{solution}
+
+\begin{subquestion}{4}
+	Is the functionality complete? Do you notice anything missing? Hint:
+	compare the functionality to the code you would have written in a non-TDD way.
+	Elaborate on this in detail.
+\end{subquestion}
+
+\begin{solution}
+	The functionality of the divide function is incomplete, as it can only handle integers and only provides proper error handling for a zero denominator. Currently, the functionality of dividing doubles is missing. Using a TDD approach, we considered many more edge cases than we would have otherwise, such as division by zero, zero in the numerator, a negative numerator and denominator, a positive numerator and negative denominator or vice versa. Without TDD, we likely would not have considered such edge cases and outliers due to us not considering them.
+\end{solution}
+
+\begin{subquestion}{4}
+	Improve the test suite based on your previous answer.
+\end{subquestion}
+
+\begin{solution}
+	Tests that we added are: \\
+
+	Division with Doubles: \\
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+@Test
+public void testdivdoubles(){
+    simpleDivide simpleDivide = new simpleDivide();
+    double result = simpleDivide.divide(5.5, 0.5);
+    assertEquals(11, result, 0.0001);
+}
+	\end{lstlisting}
+
+	Division with Doubles and integers: \\
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+@Test
+public void testdivdoublesint(){
+    simpleDivide simpleDivide = new simpleDivide();
+    double result = simpleDivide.divide(5, 0.5);
+    assertEquals(10, result, 0.0001);
+}
+	\end{lstlisting}
+
+	Zero in the numerator: \\
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+@Test
+public void testdivzero(){
+    simpleDivide simpleDivide = new simpleDivide();
+    double result = simpleDivide.divide(0, 8);
+    assertEquals(0, result, 0.0001);
+}
+	\end{lstlisting}
+
+	Negative numerator and denominator: \\
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+@Test
+public void testdivbyneg(){
+    simpleDivide simpleDivide = new simpleDivide();
+    double result = simpleDivide.divide(-8, -2);
+    assertEquals(4.0, result, 0.0001);
+}
+	\end{lstlisting}
+
+	Positive numerator and negative denominator: \\
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+@Test
+public void testdivbyoneneg(){
+    simpleDivide simpleDivide = new simpleDivide();
+    double result = simpleDivide.divide(-8, 2);
+    assertEquals(-4.0, result, 0.0001);
+}
+	\end{lstlisting}
+\end{solution}
+
+\begin{subquestion}{2}
+	Improve the functionality.
+\end{subquestion}
+
+\begin{solution}
+	Improved functionality: \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last]
+public double divide(double x, double y) {
+    if (y == 0) {
+        throw new ArithmeticException(
+            "Error - Division by zero");
+    }
+    else if (x == 0){
+        return 0;
+    }
+    return x/y;
+}
+	\end{lstlisting}
+\end{solution}
+
+\begin{subquestion}{4}
+	Would you use TDD? If yes: in what context? If no: why? What is the
+	element you liked in TDD and what is the element you find the hardest to manage?
+\end{subquestion}
+
+\begin{solution}
+	Yes, I would use TDD in the future, as it forces me to consider important edge cases early, which could cause problems if not addressed. This style of development is great for larger applications, as it promotes more modular, intentional code, which helps with application maintenance. I really enjoy how, in TDD, you get instant feedback on the code you write, which gives you confidence that it works correctly and provides a large test suite in the future. One thing I do not like about TDD is how it feels like it takes a lot more time than traditional testing, due to its upfront, in-depth testing style. Finding a balance of writing extensive test cases and writing production code would be a challenge to manage.
+\end{solution}
+
+\begin{question}{Test coverage and AI}{30}
+	In this task, use the e-commerce order processing system \href{https://github.com/ssm-lab/3S03/tree/main/assignment1}{source code} of the
+	assignment.
+\end{question}
+
+\begin{subquestion}{6}
+	Generate a reasonable amount of JUnit tests via Gen AI. Touch them up
+	manually if there are compilation errors. Measure the coverage. (Choose a
+	reasonably complex coverage metric; not the most simplistic one!)
+\end{subquestion}
+
+\begin{solution}
+	(Note that I combined b.) and c.) since Claude one-shot question b.) without me asking.) \\
+
+	To generate the tests for the assignment-1 repository, I used Claude Sonnet 4.6 (without extended thinking), since I've found it to be the best, free generative AI I've personally used for STEM-related subjects. The code it generated is shown at the end of my discussion piece. Using Eclipse's built-in EclEmma plug-in, I determined that the code coverage of the tests were as follows: \\
+	\begin{itemize}
+		\item Instruction coverage: 100.0\%
+		\item Branch coverage: 100.0\%
+		\item Line coverage: 100.0\%
+		\item Method coverage: 100.0\% \\
+	\end{itemize}
+
+	Even using the most complex coverage method available (branch), the code itself does reach 100.0\% coverage, which genuinely surprised me since I did not have to re-prompt Claude for any reason. However, I still have some to say about this which I will elaborate on in part b.) \\
+
+	The full transcript of prompts and responses follows. For brevity, only the first prompt/response pair is shown in full; the remaining exchanges followed the same pattern of providing source code and receiving tests. \\
+
+	\begin{transcript}{Prompt 1}
+		Consider the following java programs. I want you to write a \_\_reasonable\_\_ number of test cases for each using JUnit.
+	\end{transcript}
+
+	(The DiscountService source code was provided.) \\
+
+	\begin{transcript}{Response 1}
+		Claude generated a DiscountServiceTest class with tests covering: null/blank/empty codes, STUDENT10 in upper/lower/mixed case, BLACKFRIDAY in upper/lowercase, the INVALID code path, unknown codes, zero subtotals, and fractional subtotals.
+	\end{transcript}
+
+	\begin{transcript}{Prompt 2}
+		The Order source code was provided.
+	\end{transcript}
+
+	\begin{transcript}{Response 2}
+		Claude noted it would need the OrderItem and OrderStatus classes and made reasonable assumptions, generating an OrderTest class.
+	\end{transcript}
+
+	\begin{transcript}{Prompt 3}
+		All remaining classes (OrderItem, OrderService, OrderStatus, PaymentValidator, PricingService) were provided together with a request to redo the tests with the full picture in mind.
+	\end{transcript}
+
+	\begin{transcript}{Response 3}
+		Claude generated comprehensive tests for all classes: \\
+		\begin{itemize}
+			\item OrderItemTest --- valid construction, getTotalPrice, validation of zero/negative quantity and negative unit price.
+			\item OrderTest --- initial state, addItem in various statuses (CREATED, PAID, CANCELLED), setStatus, live list integrity.
+			\item PricingServiceTest --- empty order subtotal, single/multiple item subtotals, tax calculations including zero/negative/fractional cases.
+			\item PaymentValidatorTest --- card, paypal, crypto, null, and unknown methods.
+			\item OrderServiceTest --- valid payment with/without discount, crypto/null payment cancellation, unknown payment method, invalid discount code, and empty order edge cases. \\
+		\end{itemize}
+	\end{transcript}
+\end{solution}
+
+\begin{subquestion}{16}
+	Work with Gen AI until you reach 90\% coverage. You can use Gen AI, your
+	own engineering skills, or a mix of the two to reach the desired coverage. \\
+
+	Hint: Be creative and think about what Gen AI is good for and what your engineering
+	skills are good for. \\
+
+	\begin{itemize}
+		\item If you reached 90\% coverage, how much time it has taken?
+		\item What strategy did you use? (For example, did you switch
+			between AI and human once, multiple times, regularly?
+			Was there a role the AI played and role the human
+			played?)
+	\end{itemize}
+\end{subquestion}
+
+\begin{solution}
+	As stated (and shown) previously, the code generated by Claude managed to produce 100.0\% coverage across all available and relevant metrics according to EclEmma. To reiterate, none of the tests above were produced by me, only by Claude. \\
+
+	All in all, the process from start to finish of copying the code, prompting Claude, and directly implementing its testing suggestions took around 45 minutes, and I'd wager that around 30 minutes of that time was just me setting up all the project structure. Were I to be quicker, or have Claude built-into Eclipse directly, I'd wager that the entire process could take as little as 5 minutes, which is incredibly fast in my opinion, and most certainly impressed me.
+\end{solution}
+
+\begin{subquestion}{4}
+	What are your key takeaways from this exercise? What is gen AI useful
+	for and what is human cognition useful for in this particular setting (testing and
+	reaching test coverage)?
+\end{subquestion}
+
+\begin{solution}
+	First, I would like to comment on the efficacy of AI in this particular domain. Clearly, AI can produce test cases incredibly quickly, which is advantageous when producing unit tests since they are intended to be relatively concise and light-weight. Beyond that, I was very impressed by the rationale it gave for the trickier aspects of the code (without having been prompted), which I, prior to this exercise, wouldn't have guessed it would be able to identify, let alone explain. Furthermore, its ability to request more source code to properly create the tests, and make reasonable assumptions about the source code in the absence of that, particularly stunned me (I would like to say I did this on purpose to check if it would do this but in earnest I did not). Overall I came away with the feeling that generative AI certainly has quite a large role to play in the role of `tester', especially as code gets better. \\
+
+	With all of that said however, I think it would also be prudent to mention some of generative AI's problems/limitations. For one, the scope of the project is tiny in comparison to the kinds of projects that might be seen in industry. Although it was quite successful in this toy example, that may not carry over into those sorts of applications, especially considering the fact that LLMs have a limited context window to work with. \\
+
+	Secondly, although I applauded Claude earlier for its ability to inquire when needed, from the very first prompt, it had never once asked me how many cases constitute a ``reasonable'' number of test cases (in this case, it provided me too many for my purposes). I could see this very much being a problem in the case that its definition of reasonable is too low, and may lull developers into a false sense of security. Further exemplary of this problem, I believe, is its choice of delta for testing numeric values. Although the context could make a delta of .01 reasonable, this may not be the case in all situations (for example, in Canada, where pennies have been abolished and so a difference of 1 cent may actually translate to a 5 cent difference). Although it did explain why a delta would be necessary, it never justified why it chose the value it did. \\
+
+	Lastly, although Claude did a good job, I also feel it important to acknowledge that I think any testing developer could very reasonably come up with any one of these test cases on their own. Although, it's certainly very plausible for one to forget a case or two, overall the quality of the tests it produced were hardly anything revolutionary in their own right. \\
+
+	With all this in mind, this brings me to my conclusion that generative AI's purpose in testing is best served in serving sanity checks and rapidly scaffolding out very much necessary, but obvious test cases which would otherwise be tedious to write manually. With the direction of an engineer to help provide detailed context (such as satisfactory deltas) that the project may need, I believe that the already impressive results of generative AI I've seen through this example could really be realized to their fullest potential.
+\end{solution}
+
+\begin{subquestion}{4}
+	Based on your takeaways, envision the next generation of AI-enabled,
+	human-in-the-loop testing tools, e.g., ones that you would like to work with. If you had
+	to invest \$1M into developing such tools, what would be the top features of that tool?
+	What would be the biggest challenges of widespread adoption?
+\end{subquestion}
+
+\begin{solution}
+	Based on my takeaways, I think the answer to this question becomes quite clear. The ideal tool would essentially be a direct integration of a generative AI model right into the IDE itself (something like, say, a Claude plugin for Eclipse), which, guided by an engineer, could iteratively generate, run, and refine tests in a feedback loop until a satisfactory coverage threshold is reached. Given that my biggest gripes with the current process were largely logistical (the setup time, the copy-pasting, the back-and-forth), I think this alone would go a very long way. \\
+
+	Beyond that, I think the most valuable feature such a tool could have would be some form of structured dialogue, where the AI asks targeted clarifying questions before generating anything. As I mentioned, Claude never once asked me what a ``reasonable'' number of test cases was, nor did it justify its choice of delta. A tool that instead prompts the engineer for these kinds of project-specific parameters upfront (acceptable numeric tolerances, coverage targets, known edge cases, domain constraints, etc.) would, in my view, produce faster and more correct results. This feels like the most effective way to spend the money. \\
+
+	As for the biggest challenges of widespread adoption, I think the answer is, perhaps unsurprisingly, trust. As I noted, the scope of this exercise was tiny, and I think many engineers working on large, safety-critical codebases would be, quite reasonably, reluctant to trust a tool they cannot fully audit (I think many can see the irony of using what is essentially a blackbox to write blackbox tests). Further compounding this is the false sense of security problem I raised earlier. A tool that confidently produces tests and reports 100\% coverage may cause developers to stop thinking critically about what is actually being tested. Getting engineers to treat such a tool as a collaborator rather than an authority, I think, is the single hardest cultural and technical problem such a product would face.
+\end{solution}
+
+\end{document}
