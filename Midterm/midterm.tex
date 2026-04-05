@@ -1,0 +1,384 @@
+\documentclass[10pt]{article}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{sectsty}
+\usepackage{braket}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{changepage}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{mathtools}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xltabular}
+\usepackage{listings, xcolor}
+\usepackage{courier}
+\usepackage{color}
+\usepackage{hyperref}
+\geometry{margin=1in}
+
+\pagestyle{fancy}
+\fancyhf{}
+\cfoot{\thepage}
+
+\date{
+	\vspace{-.75em}
+	{\large \today}
+}
+
+\title{
+	\vspace*{-1.5em}
+	{\Huge SFWRENG 3S03} \\
+	\vspace{-1em}
+	\rule{\textwidth/2}{.01em} \\
+	\vspace{-.25em}
+	{\Large Midterm Test (A)}
+	\vspace{-.75em}
+}
+
+\author{
+	{\large Matthew Farah, 400468251}
+}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,
+	urlcolor=blue,
+	citecolor=blue,
+	anchorcolor=blue
+}
+
+\lstset{
+	tabsize = 4,
+	showstringspaces = false,
+	numbers = left,
+	commentstyle = \color{teal},
+	keywordstyle = \color{blue},
+	stringstyle = \color{red},
+	rulecolor = \color{black},
+	basicstyle = \ttfamily,
+	breaklines = true,
+	numberstyle = \small,
+}
+
+\fancyhead{}
+\fancyhead[L]{Matthew Farah, 400468251}
+\fancyhead[R]{SFWRENG 3S03 - Midterm Test (A)}
+
+\setlength{\parindent}{0cm}
+
+\setcounter{tocdepth}{3}
+\hypersetup{bookmarksopen=true, bookmarksopenlevel=2, bookmarksdepth=3}
+
+\newcounter{chapter}
+\renewcommand{\thechapter}{\Roman{chapter}}
+
+\newcounter{question}
+\renewcommand{\thequestion}{\arabic{question}}
+
+\newenvironment{question}[2]{
+	\refstepcounter{question}
+	\newpage
+	\phantomsection
+	\addcontentsline{toc}{section}{\protect{Question \thequestion \, - #1}}
+	\vspace{1em}
+	\par
+	\begin{adjustwidth}{.5em}{}
+	[#2 marks]
+	\par
+	\textbf{Question \thequestion}
+	\vspace{.2cm}
+	\par
+	\setcounter{subquestion}{0}
+	\setcounter{step}{0}
+}{
+	\end{adjustwidth}
+	\vspace{.5em}
+
+}
+
+\newenvironment{solution}{
+	\vspace{.5em}
+	\par
+	\begin{adjustwidth}{.5em}{}
+	\textbf{{Solution:}}
+	\par
+	\vspace{.5em}
+}{
+	\vspace{1em}
+	\end{adjustwidth}
+}
+
+\newcounter{subquestion}
+\renewcommand{\thesubquestion}{\alph{subquestion}}
+
+\newenvironment{subquestion}[1]{
+	\refstepcounter{subquestion}
+	\phantomsection
+	\addcontentsline{toc}{subsection}{\protect{Part \thequestion.\thesubquestion}}
+	\vspace{1em}
+	\begin{adjustwidth}{.5em}{}
+	[#1 marks]
+	\par
+	\vspace{.25em}\par\textbf{(\thesubquestion)}\hspace{-.75em}
+	\setcounter{step}{0}
+}{
+	\end{adjustwidth}
+	\par
+	\vspace{1em}
+}
+
+\makeatother
+
+\makeatletter
+
+\newcounter{step}
+\renewcommand{\thestep}{\Roman{step}}
+
+\newenvironment{step}{
+	\refstepcounter{step}
+	\vspace{1em}\par\noindent
+	\ignorespaces\noindent\textbf{(\thestep)}
+	\ignorespaces
+}{
+	\par
+	\vspace{1em}
+}
+
+\makeatother
+
+\newcommand{\choice}{[\hspace{1em}]\hspace{.5em}}
+\newcommand{\chosen}{[\hspace{.125em}$\times$\hspace{.125em}]\hspace{.5em}}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\sectionfont{\fontsize{12}{12}\bfseries}
+\subsectionfont{\fontsize{10}{12}\normalfont}
+\subsubsectionfont{\fontsize{10}{12}\normalfont}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\begin{center}
+	\emph{Remark: Overall got a 96\% on the midterm, so all answers unless otherwise noted should be taken as correct}.
+\end{center}
+
+\newpage
+
+\begin{question}{Multiple Choice}{4}
+	Mark the correct answer(s) with an X.
+\end{question}
+
+\begin{subquestion}{1}
+	What is/are the key idea(s) of MC/DC?
+
+	\begin{itemize}[label={}, leftmargin=0em]
+		\item \choice Combine branch coverage and condition coverage to achieve path coverage.
+		\item \chosen Test only the important combinations of conditions.
+		\item \choice Ensure robustness by exhaustive combinatorial testing.
+		\item \choice Separate test logic from production code to achieve better maintainability.
+	\end{itemize}
+\end{subquestion}
+
+\begin{subquestion}{1}
+	Which of the following statements is true?
+
+	\begin{itemize}[label={}, leftmargin=0em]
+		\item \chosen Branch coverage does not measure the percentage of exercised code statements.
+		\item \chosen Branch coverage assesses the proportion of decision points exercised by test cases.
+		\item \choice Condition coverage subsumes branch coverage.
+		\item \choice Branch coverage subsumes condition coverage.
+	\end{itemize}
+\end{subquestion}
+
+\begin{subquestion}{1}
+	What is/are the goal(s) of exploratory testing?
+
+	\begin{itemize}[label={}, leftmargin=0em]
+		\item \choice Explore the test suite someone else defined earlier.
+		\item \chosen Explore the product.
+		\item \chosen Define tests.
+		\item \choice Click some (but not all) functional elements on the GUI.
+	\end{itemize}
+\end{subquestion}
+
+\begin{subquestion}{1}
+	Which of the following best describe(s) the process of specifying a CFG of a program?
+
+	\begin{itemize}[label={}, leftmargin=0em]
+		\item \choice It involves mapping out the data dependencies in the program to optimize memory usage.
+		\item \choice It focuses on identifying potential security vulnerabilities and mitigating risks in the code.
+		\item \chosen It entails visualizing the sequence of execution paths and decision points in the program.
+		\item \choice It mainly concerns the analysis of runtime performance to enhance program efficiency.
+	\end{itemize}
+\end{subquestion}
+
+\begin{question}{Mocking}{2}
+	What is mocking and what purpose does it serve? Contrast mocks with fakes.
+\end{question}
+
+\begin{solution}
+	Mocking is done in unit testing and simulates outside units that the unit under test is dependent on. This is useful and done in solitary unit tests, to isolate units, and thereby the bugs they may have, making pinpointing where a bug comes from easier. \\
+
+	Mock objects are dummy objects that essentially do nothing whereas fakes are a minimal implementation of whatever it is that it's faking. \\
+
+	\emph{Remark: Lost one mark here, but not really sure why TBH, looks right to me}.
+\end{solution}
+
+\begin{question}{Unit Testing Flavors}{2.5}
+	Which flavor of unit testing is often confused with integration testing and why? Elaborate on the benefits and challenges associated with the other flavor of unit tests. \\
+
+	Hint: You've read about this in Martin Fowler's blog. (Ideally.)
+\end{question}
+
+\begin{solution}
+	Sociable unit tests are most often confused with integration tests since in sociable unit tests, units under test are not isolated (allowed to interact with) other units in the code they are dependent on. This is similar to integration tests, which test how units work together. \\
+
+	Solitary unit testing is beneficial since it makes identifying the source of a fault easier, but introduces additional overhead since all dependent units must be replaced by test doubles.
+\end{solution}
+
+\begin{question}{Regression, TDD, and the V-Model}{4.5}
+	What is a regression suite and what purpose does it serve? What are the three phases of TDD? Name the two characteristically different testing paradigms in the V-model and explain them in one-one sentence. \\
+
+	Hint: The two branches of the ``V''.
+\end{question}
+
+\begin{subquestion}{1}
+	What is a regression suite and what purpose does it serve?
+\end{subquestion}
+
+\begin{solution}
+	Regression suites are a collection of test cases that prior iterations of the software were tested on. This ensures changes made do not break existing functionality.
+\end{solution}
+
+\begin{subquestion}{1.5}
+	What are the three phases of TDD?
+\end{subquestion}
+
+\begin{solution}
+	The three phases of test-driven development are: \\
+	\begin{enumerate}
+		\item Write tests.
+		\item Write code.
+		\item Test code against previously written tests. \\
+	\end{enumerate}
+\end{solution}
+
+\begin{subquestion}{2}
+	Name the two characteristically different testing paradigms in the V-model and explain them in one-one sentence.
+\end{subquestion}
+
+\begin{solution}
+	The paradigms of the V-model: \\
+	\begin{enumerate}
+		\item Verification
+		\begin{itemize}
+			\item Ensure system complies with its specification.
+		\end{itemize}
+		\item Validation
+		\begin{itemize}
+			\item Ensure system delivers what the customer wants.
+		\end{itemize}
+	\end{enumerate}
+\end{solution}
+
+\begin{question}{Equivalence Partitioning}{6.5}
+	Equivalence partitioning.
+\end{question}
+
+\begin{subquestion}{2}
+	What is the key idea of equivalence partitioning? What are its benefits?
+\end{subquestion}
+
+\begin{solution}
+	Equivalence partitioning separates out the set of all inputs to a program into equivalence classes, where the program behaves similarly with the inputs from a given class. This is beneficial since if the partitions are well chosen, only one test case per equivalence class must be written, saving time and money.
+\end{solution}
+
+\begin{subquestion}{4.5}
+	JUnit provides the following overloading of assertEquals to test nearly equal values: assertEquals(double expected, double actual, double delta), with the following semantics:
+	\begin{align*}
+		\text{equal}(\text{expected}, \text{actual}) \coloneq |\text{expected} - \text{actual}| \le \text{delta}
+	\end{align*}
+	Suppose you are testing measurements from a sensor, and you decide that measurement differences under 0.01 are to be treated as equal (e.g., because the sensor is not too precise), and you rely on the above overloading of assertEquals. \\
+
+	Using the method studied in the class, prove that one of the key traits of equivalence is violated in your approach. What are the practical consequences of this violation w.r.t.\ equivalence partitioning as a testing technique? Name two for full marks.
+\end{subquestion}
+
+\begin{solution}
+	Transitivity is violated since:
+	\begin{gather*}
+		|0 - 0.01| \le 0.01 \quad \land \quad |0.01 - 0.02| \le 0.01 \quad \not\Rightarrow \quad |0 - 0.02| \le 0.01 \\
+		\underbrace{\hspace{2.5cm}}_{(x, y) \in A} \qquad\quad \underbrace{\hspace{3cm}}_{(y, z) \in A} \quad\quad\quad \underbrace{\hspace{2.5cm}}_{(x, z) \notin A} \notag
+	\end{gather*}
+
+	Practical consequences: \\
+	\begin{itemize}
+		\item Testing only one input per partition does not guarantee same behaviour for all other inputs in the partition. Hence, more tests should be written.
+		\item Could inspire false confidence.
+		\item Breaks the mathematical certainty that comes with equivalence partitioning.
+	\end{itemize}
+\end{solution}
+
+\begin{question}{System Under Test}{5.5}
+	Consider the following system under test. \\
+
+	\begin{lstlisting}[language = Java, frame = trBL, firstnumber = last, title = {\Large calculateSomething:}]
+double calculateSomething(double x, double y) {
+	if ((x > 0 XOR y > 0) AND x < 100)
+		return x / y;
+	else
+		return x * y;
+}
+	\end{lstlisting}
+\end{question}
+
+\begin{subquestion}{2.5}
+	Calculate the equivalence partitions for method calculateSomething and briefly explain the solution.
+\end{subquestion}
+
+\begin{solution}
+	\begin{align*}
+		x&: \quad \{\min\_\text{double} \le x \le 0\}, \quad \{0 < x < 100\}, \quad \{100 \le x \le \max\_\text{double}\} \\
+		y&: \quad \{\min\_\text{double} \le y < 0\}, \quad \{y = 0\}, \quad \{0 < y \le \max\_\text{double}\}
+	\end{align*}
+
+	I separated out each input into partitions based on which values of each may change the program's behaviour, ensuring $y = 0$ was included separately due to divide by zero error.
+\end{solution}
+
+\begin{subquestion}{3}
+	Define a test suite for calculateSomething that achieves 100\% MC/DC. Use the method we studied in the lecture and document the steps.
+\end{subquestion}
+
+\begin{solution}
+	\begin{center}
+		\renewcommand{\arraystretch}{1.3}
+		\begin{tabular}{c|c|c|c||c|l}
+			Row & $x < 100$ & $y > 0$ & $x > 0$ & Condition & \\ \hline
+			1 & F & F & F & F & \\
+			2 & F & F & T & F & Not possible \\
+			$\ast$ 3 & F & T & F & F & $\updownarrow$ with row 7 ($x < 100$) \\
+			4 & F & T & T & F & \\
+			$\ast$ 5 & T & F & F & F & $\updownarrow$ with row 6 ($x > 0$) \\
+			$\ast$ 6 & T & F & T & T & $\updownarrow$ with row 8 ($y > 0$) \\
+			$\ast$ 7 & T & T & F & T & \\
+			$\ast$ 8 & T & T & T & F & \\
+		\end{tabular}
+	\end{center}
+
+	\vspace{.5em}
+
+	First, to achieve MC/DC coverage I looked at the one and only condition in the code. To design the tests, I have to find what values of the inputs can independently affect the outcome of the overall condition. The condition is composed of three other nested conditions: $x > 0$, $y > 0$ and $x < 100$. So, I created my table by considering what the overall condition evaluated to based on the truth of each of those sub-conditions. To create the MC/DC test cases, the rows can be used so that if a sub-condition can independently affect how the condition evaluates, then that row and the row with just that sub-condition flipped have a representative input. This is represented in the truth table by arrows. \\
+
+	Also, a test for $0 < x < 100$, $y = 0$ must also be included due to the divide by zero error.
+\end{solution}
+
+\end{document}
